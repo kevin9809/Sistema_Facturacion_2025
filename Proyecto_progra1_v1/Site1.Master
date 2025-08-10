@@ -19,19 +19,15 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
       <img src="/Imagenes/Logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-      Bootstrap
+      Sistema de Registro y Facturación | Mueblería
     </a>
   </div>
 </nav>
 
-        <h1 class="title">Hola Mundo</h1>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-    
-
-
      
 </body>
 </html>
