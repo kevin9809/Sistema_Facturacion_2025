@@ -3,6 +3,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h2>Clientes</h2>
-
+    <form runat="server">
+        <h2>Clientes registrados</h2>
+        <asp:Button ID="btnAgregar" runat="server" Text="Agregar cliente" />
+        <asp:GridView ID="dgvClientes" runat="server"></asp:GridView>
+    </form>
+        
 </asp:Content>

@@ -3,6 +3,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h2>Inventario</h2>
-
+    <form runat="server">
+        <h2>Inventario</h2>
+        <asp:Button ID="btnAgregarInventario" runat="server" Text="Agregar a inventario" />
+        <asp:GridView ID="dgvInventario" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="true"></asp:GridView>
+        
+    </form>
+    
 </asp:Content>
