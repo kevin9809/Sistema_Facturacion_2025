@@ -1,3 +1,96 @@
-﻿body {
- 
+﻿:root {
+    --palette1: #ffffff;
+    --palette2: #f2f2f2;
+    
+    --palette3: rgba(44, 169, 161, 0.5);
+    --palette4: #f78b2c;
+    --palette5: #363534;
+}
+body {
+  
+}
+
+/*Navbar*/
+nav{
+    font-size: 1.2rem;
+}
+
+/*home sections*/
+.section-full {
+    min-height: auto; /* Ocupa el 100% de la pantalla */
+}
+
+.section-half {
+    min-height: 50vh; /* Mitad de la altura de pantalla */
+}
+
+.section-image img {
+    object-fit: cover;
+    height: 100%;
+}
+
+.section-info {
+    background-color: #f8f9fa; /* Color de fondo info */
+}
+
+    .section-info h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .section-info p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+.my-bg{
+    background-color: var(--palette3);
+    color: var(--palette5);
+    font-weight:700;
+    font-size: 1.5rem;
+}
+
+.my-btn{
+    background-color: var(--palette4) !important;
+    font-weight: 600;
+}
+
+/*Footer*/
+footer {
+    bottom: 0;
+    background-color: var(--palette5);
+    color: var(--palette1);
+    padding: 5rem 0;
+}
+
+    footer .footer-top {
+        margin: auto;
+    }
+
+    footer img {
+        max-height: 10rem;
+        width: auto;
+        object-fit: scale-down;
+    }
+
+    footer .subscribe-btn {
+        background-color: var(--palette4);
+    }
+
+.footer-links {
+    width: 100%;
+}
+
+.links {
+    padding: 1rem !important;
+}
+
+.footer-links .links .title {
+    font-weight: 700 !important;
+}
+
+footer li {
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
 }
