@@ -69,15 +69,11 @@
     <Content Include="Imagenes\pic4.jpg" />
     <Content Include="Imagenes\pic3.jpg" />
     <Content Include="Imagenes\Logo.png" />
-
     <Content Include="Imagenes\pic2.jpg" />
-    <Content Include="Pages\Clientes.aspx" />
-
     <Content Include="Pages\Client\EditarCliente.aspx" />
     <Content Include="Pages\Client\Clientes.aspx" />
     <Content Include="Pages\Client\EliminarCliente.aspx" />
     <Content Include="Pages\Client\RegistrarCliente.aspx" />
-
     <Content Include="Pages\Facturas.aspx" />
     <Content Include="Pages\Home.aspx" />
     <Content Include="Pages\Inventory\AgregarInventario.aspx" />
