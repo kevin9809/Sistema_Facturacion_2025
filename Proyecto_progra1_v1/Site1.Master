@@ -9,26 +9,121 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <title> Inicio </title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <link href="~/css/Style.css" rel="stylesheet" type="text/css" runat="server" />
+    
+    <%--Bootstrap Icons--%>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <%-- CSS --%>
+    <link href="/css/Style.css" rel="stylesheet" type="text/css" runat="server" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
 
-    <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="/Imagenes/Logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-      Sistema de Registro y Facturación | Insigth Furniture
-    </a>
+  <%-- NavBar --%>
+    <nav class="navbar navbar-expand-lg"  style="background-color: #ffffff;">
+  <div class="container">
+    <a class="navbar-brand" href="Home.aspx" >
+        <img src="/Imagenes/Logo.png" alt="Logo" width="200" height="auto" class="d-inline-block align-text-top" >
+    </a >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="Home.aspx">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Financiamiento</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Ayuda</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Administrador
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="Clientes.aspx">Clientes</a></li>
+            <li><a class="dropdown-item" href="Inventario.aspx">Inventario</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="Facturas.aspx">Facturas</a></li>
+            <li><a class="dropdown-item" href="Facturas.aspx">Facturas</a></li>
+          </ul>
+        </li>
+      </ul>
+        <ul class="navbar-nav d-flex">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-person-fill"></i>Login</a>
+            </li>
+        </ul>
+    </div>
   </div>
 </nav>
-    <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
-    </form>
+
+<form id="form1" runat="server">
+    <div>
+      <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+      </asp:ContentPlaceHolder>
+    </div>
+  </form>
      
+    <%-- Footer --%>
+    <footer class="footer-wrapp" id="footer">
+      <div class="row container footer-top ">
+        <img
+          src="https://res.cloudinary.com/dymsokiwr/image/upload/v1729572683/IF_Logo_BW_slqpml.png"
+          alt=""
+          class="col-sm-5 col-md"
+        />
+        <div class="col-sm-5 col-md">
+          <div class="content">
+            <p>Subscribe to our news letter</p>
+            <div class="input-group">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Enter your email"
+              ></input>
+              <button class="btn subscribe-btn" type="submit">
+                Subscribe Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row footer-links justify-content-center">
+        <div class="links col-2 text-center">
+          <p class="title ">About Insight</p>
+          <li>About</li>
+          <li>Careers</li>
+          <li>News</li>
+          <li>About Insight</li>
+        </div>
+        <div class="links  col-2 text-center">
+          <p class="title">Insight Help</p>
+          <li>Accessibility</li>
+          <li>Help Center</li>
+          <li>FAQ</li>
+          <li>Returns</li>
+          <li>Price Match</li>
+          <li>Child Safety</li>
+        </div>
+        <div class="links col-2 text-center">
+          <p class="title">Services</p>
+          <li>Financing</li>
+          <li>Rewards</li>
+          <li>Trade Program</li>
+          <li>Delivery Methods</li>
+        </div>
+        <div class="links  col-2 text-center">
+          <p class="title">Legal</p>
+          <li>Terms and Conditions</li>
+          <li>Offers & Details</li>
+          <li>Privacy Policy</li>
+        </div>
+      </div>
+    </footer> 
+
 </body>
 </html>

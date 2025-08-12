@@ -66,7 +66,10 @@
   <ItemGroup>
     <Content Include="css\Style.css" />
     <Content Include="Global.asax" />
+    <Content Include="Imagenes\pic4.jpg" />
+    <Content Include="Imagenes\pic3.jpg" />
     <Content Include="Imagenes\Logo.png" />
+    <Content Include="Imagenes\pic2.jpg" />
     <Content Include="Pages\Clientes.aspx" />
     <Content Include="Pages\Facturas.aspx" />
     <Content Include="Pages\Home.aspx" />
@@ -131,6 +134,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Imagenes\pic1.webp" />
     <None Include="packages.config" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">
