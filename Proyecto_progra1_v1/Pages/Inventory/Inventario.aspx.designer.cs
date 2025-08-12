@@ -11,7 +11,16 @@ namespace Proyecto_progra1_v1.Pages
 {
 
 
-    public partial class Clientes
+    public partial class Inventario
     {
+
+        /// <summary>
+        /// Control dgvInventario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvInventario;
     }
 }
