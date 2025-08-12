@@ -60,15 +60,14 @@
     </div>
   </div>
 </nav>
-    
 
-    <%-- Components --%>
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-               
-            </asp:ContentPlaceHolder>
-        </div>
-
+<form id="form1" runat="server">
+    <div>
+      <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+      </asp:ContentPlaceHolder>
+    </div>
+  </form>
+     
     <%-- Footer --%>
     <footer class="footer-wrapp" id="footer">
       <div class="row container footer-top ">
@@ -125,5 +124,6 @@
         </div>
       </div>
     </footer> 
+
 </body>
 </html>
