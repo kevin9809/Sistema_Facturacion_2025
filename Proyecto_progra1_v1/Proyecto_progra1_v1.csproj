@@ -69,11 +69,21 @@
     <Content Include="Imagenes\pic4.jpg" />
     <Content Include="Imagenes\pic3.jpg" />
     <Content Include="Imagenes\Logo.png" />
+<<<<<<< HEAD
     <Content Include="Imagenes\pic2.jpg" />
     <Content Include="Pages\Clientes.aspx" />
+=======
+    <Content Include="Pages\Client\EditarCliente.aspx" />
+    <Content Include="Pages\Client\Clientes.aspx" />
+    <Content Include="Pages\Client\EliminarCliente.aspx" />
+    <Content Include="Pages\Client\RegistrarCliente.aspx" />
+>>>>>>> backup/master
     <Content Include="Pages\Facturas.aspx" />
     <Content Include="Pages\Home.aspx" />
-    <Content Include="Pages\Inventario.aspx" />
+    <Content Include="Pages\Inventory\AgregarInventario.aspx" />
+    <Content Include="Pages\Inventory\EditarInventario.aspx" />
+    <Content Include="Pages\Inventory\EliminarInventario.aspx" />
+    <Content Include="Pages\Inventory\Inventario.aspx" />
     <Content Include="Pages\Login.aspx" />
     <Content Include="Pages\Logout.aspx" />
     <Content Include="Web.config" />
@@ -82,12 +92,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Clientes.aspx.cs">
+    <Compile Include="Pages\Client\EditarCliente.aspx.cs">
+      <DependentUpon>EditarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Client\EditarCliente.aspx.designer.cs">
+      <DependentUpon>EditarCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Clientes.aspx.designer.cs">
+    <Compile Include="Pages\Client\Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\EliminarCliente.aspx.cs">
+      <DependentUpon>EliminarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Client\EliminarCliente.aspx.designer.cs">
+      <DependentUpon>EliminarCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\RegistrarCliente.aspx.cs">
+      <DependentUpon>RegistrarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Client\RegistrarCliente.aspx.designer.cs">
+      <DependentUpon>RegistrarCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Facturas.aspx.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
@@ -103,11 +134,32 @@
     <Compile Include="Pages\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Inventario.aspx.cs">
+    <Compile Include="Pages\Inventory\AgregarInventario.aspx.cs">
+      <DependentUpon>AgregarInventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Inventory\AgregarInventario.aspx.designer.cs">
+      <DependentUpon>AgregarInventario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Inventory\EditarInventario.aspx.cs">
+      <DependentUpon>EditarInventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Inventory\EditarInventario.aspx.designer.cs">
+      <DependentUpon>EditarInventario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Inventory\EliminarInventario.aspx.cs">
+      <DependentUpon>EliminarInventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Inventory\EliminarInventario.aspx.designer.cs">
+      <DependentUpon>EliminarInventario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Inventory\Inventario.aspx.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Inventario.aspx.designer.cs">
+    <Compile Include="Pages\Inventory\Inventario.aspx.designer.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Login.aspx.cs">

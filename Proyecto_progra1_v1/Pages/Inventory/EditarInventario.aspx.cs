@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Proyecto_progra1_v1.Pages
+namespace Proyecto_progra1_v1.Pages.Inventory
 {
-    public partial class Inventario : System.Web.UI.Page
+    public partial class EditarInventario : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
