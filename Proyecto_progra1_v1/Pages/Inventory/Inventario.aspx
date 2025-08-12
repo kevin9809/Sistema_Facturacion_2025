@@ -3,11 +3,34 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <form runat="server">
-        <h2>Inventario</h2>
-        <asp:Button ID="btnAgregarInventario" runat="server" Text="Agregar a inventario" />
-        <asp:GridView ID="dgvInventario" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="true"></asp:GridView>
-        
-    </form>
+    <div class="container mt-4">
+        <h2 class="mb-4">Inventario</h2>
+        <form runat="server">
+            <a href="AgregarInventario.aspx" class="btn btn-primary mb-3">Agregar a inventario</a>
+
+            <asp:GridView ID="dgvInventario" runat="server" AutoGenerateColumns="false"
+            CssClass="table table-bordered table-striped table-hover">
+
+             <Columns>
+                <asp:BoundField DataField="ID" HeaderText="ID" />
+                <asp:BoundField DataField="Codigo" HeaderText="Código" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+                <asp:BoundField DataField="Precio" HeaderText="Precio" />
+                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+
+                <asp:TemplateField HeaderText="Funciones">
+                    <ItemTemplate>
+                    <a href='<%# "EditarInventario.aspx?id=" + Eval("ID") %>' class="text-primary me-2">Editar</a>
+                    <a href='<%# "EliminarInventario.aspx?id=" + Eval("ID") %>' class="text-danger">Eliminar</a>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+
+            </asp:GridView>
+    
+        </form>
+
+    </div>
     
 </asp:Content>

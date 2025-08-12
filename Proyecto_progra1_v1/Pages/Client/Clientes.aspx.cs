@@ -26,14 +26,11 @@ namespace Proyecto_progra1_v1.Pages
             dt.Columns.Add("Direccion", typeof(string));
             dt.Columns.Add("Teléfono", typeof(string));
             dt.Columns.Add("Email", typeof(string));
-            dt.Columns.Add("Funciones");
 
-            string funciones = "Editar | Eliminar";
-
-            dt.Rows.Add(1, "Juan Pérez", "Av. Central #123", "555-1234", "juan@example.com", funciones);
-            dt.Rows.Add(2, "María López", "Calle 5 #45", "555-5678", "maria@example.com", funciones);
-            dt.Rows.Add(3, "Carlos Gómez", "Boulevard Norte #77", "555-9999", "carlos@example.com", funciones);
-            dt.Rows.Add(4, "Ana Torres", "Col. Jardines #15", "555-2222", "ana@example.com", funciones);
+            dt.Rows.Add(1, "Juan Pérez", "Av. Central #123", "555-1234", "juan@example.com");
+            dt.Rows.Add(2, "María López", "Calle 5 #45", "555-5678", "maria@example.com");
+            dt.Rows.Add(3, "Carlos Gómez", "Boulevard Norte #77", "555-9999", "carlos@example.com");
+            dt.Rows.Add(4, "Ana Torres", "Col. Jardines #15", "555-2222", "ana@example.com");
 
             return dt;
         }

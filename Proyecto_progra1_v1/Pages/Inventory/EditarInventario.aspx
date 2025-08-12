@@ -3,31 +3,40 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-   <form runat="server">
-  <h2>Editar Inventario</h2>
-       <div></div>
-       <div></div>
-  <asp:Label ID="lbCodigo" runat="server" Text="Código"></asp:Label>
-  <asp:TextBox ID="txtCodigo" runat="server"></asp:TextBox>
+   <div class="container mt-4">
+    <h2 class="mb-4">Editar Inventario</h2>
 
-       <div></div>
-  <asp:Label ID="lbNombre" runat="server" Text="Nombre"></asp:Label>
-  <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
+    <form runat="server" class="border p-4 rounded shadow-sm bg-light">
 
-       <div></div>
-  <asp:Label ID="lbDescripcion" runat="server" Text="Descripción"></asp:Label>
-  <asp:TextBox ID="txtDescripcion" runat="server"></asp:TextBox>
+        <div class="mb-3">
+            <asp:Label ID="lbCodigo" runat="server" Text="Código" CssClass="form-label"></asp:Label>
+            <asp:TextBox ID="txtCodigo" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
 
-       <div></div>
-  <asp:Label ID="lbPrecio" runat="server" Text="Precio"></asp:Label>
-  <asp:TextBox ID="txtPrecio" runat="server" TextMode="Number" step="0.01"></asp:TextBox>
+        <div class="mb-3">
+            <asp:Label ID="lbNombre" runat="server" Text="Nombre" CssClass="form-label"></asp:Label>
+            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
 
-       <div></div>
-  <asp:Label ID="lbCantidad" runat="server" Text="Cantidad"></asp:Label>
-  <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number"></asp:TextBox>
+        <div class="mb-3">
+            <asp:Label ID="lbDescripcion" runat="server" Text="Descripción" CssClass="form-label"></asp:Label>
+            <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
 
-       <div></div>
-  <asp:Button ID="btnEditarInventario" runat="server" Text="Editar" />
-  </form>
+        <div class="mb-3">
+            <asp:Label ID="lbPrecio" runat="server" Text="Precio" CssClass="form-label"></asp:Label>
+            <asp:TextBox ID="txtPrecio" runat="server" TextMode="Number" step="0.01" CssClass="form-control"></asp:TextBox>
+        </div>
+
+        <div class="mb-3">
+            <asp:Label ID="lbCantidad" runat="server" Text="Cantidad" CssClass="form-label"></asp:Label>
+            <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+        </div>
+
+        <asp:Button ID="btnAgregarInventario" runat="server" Text="Editar" CssClass="btn btn-primary" />
+        <a href="Inventario.aspx" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+</div>
 
 </asp:Content>

@@ -2,11 +2,29 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <div class="container mt-4">
+        <h2 class="mb-4">Clientes registrados</h2>
+    
+        <form runat="server">        
+            <a href="RegistrarCliente.aspx" class="btn btn-primary mb-3">Agregar cliente</a>
 
-    <form runat="server">
-        <h2>Clientes registrados</h2>
-        <asp:Button ID="btnAgregar" runat="server" Text="Agregar cliente" />
-        <asp:GridView ID="dgvClientes" runat="server"></asp:GridView>
-    </form>
-        
+            <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false"
+                          CssClass="table table-bordered table-striped table-hover">
+                 <Columns>
+                     <asp:BoundField DataField="ID" HeaderText="ID" />
+                     <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                     <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
+                     <asp:BoundField DataField="Teléfono" HeaderText="Teléfono" />
+                     <asp:BoundField DataField="Email" HeaderText="Email" />
+
+                     <asp:TemplateField HeaderText="Funciones">
+                         <ItemTemplate>
+                             <a href='<%# "EditarCliente.aspx?id=" + Eval("ID") %>' class="text-primary me-2">Editar</a>
+                             <a href='<%# "EliminarCliente.aspx?id=" + Eval("ID") %>' class="text-danger">Eliminar</a>
+                         </ItemTemplate>
+                     </asp:TemplateField>
+                 </Columns>
+            </asp:GridView>
+        </form>
+    </div>
 </asp:Content>

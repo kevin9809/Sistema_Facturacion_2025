@@ -15,13 +15,13 @@ namespace Proyecto_progra1_v1.Pages.Inventory
     {
 
         /// <summary>
-        /// Control Label1.
+        /// Control ID.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label ID;
 
         /// <summary>
         /// Control lbCodigo.
@@ -33,15 +33,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         protected global::System.Web.UI.WebControls.Label lbCodigo;
 
         /// <summary>
-        /// Control Label2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-
-        /// <summary>
         /// Control lbNombre.
         /// </summary>
         /// <remarks>
@@ -49,15 +40,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbNombre;
-
-        /// <summary>
-        /// Control Label3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
 
         /// <summary>
         /// Control lbDescripcion.
@@ -69,15 +51,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         protected global::System.Web.UI.WebControls.Label lbDescripcion;
 
         /// <summary>
-        /// Control Label4.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
-
-        /// <summary>
         /// Control lbPrecio.
         /// </summary>
         /// <remarks>
@@ -85,15 +58,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbPrecio;
-
-        /// <summary>
-        /// Control Label5.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
 
         /// <summary>
         /// Control lbCantidad.
