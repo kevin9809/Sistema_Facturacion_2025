@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
    <div class="container mt-4">
-    <h2 class="mb-4">Editar Inventario</h2>
+    <h2 class="mb-4">Editar producto</h2>
 
     <form runat="server" class="border p-4 rounded shadow-sm bg-light">
 
