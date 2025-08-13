@@ -6,7 +6,7 @@
    <div class="container mt-4">
     <h2 class="mb-4">Editar producto</h2>
 
-    <form runat="server" class="border p-4 rounded shadow-sm bg-light">
+    <div class="border p-4 rounded shadow-sm bg-light">
 
         <div class="mb-3">
             <asp:Label ID="lbCodigo" runat="server" Text="Código" CssClass="form-label"></asp:Label>
@@ -35,7 +35,7 @@
 
         <asp:Button ID="btnAgregarInventario" runat="server" Text="Editar" CssClass="btn btn-primary" />
         <a href="Inventario.aspx" class="btn btn-secondary">Cancelar</a>
-    </form>
+    </div>
 
 </div>
 
