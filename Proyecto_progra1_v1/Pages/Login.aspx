@@ -7,52 +7,46 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+  <div class="login-wrapper">
+    <div class="login-content">
 
+      <asp:Panel ID="pnlLogin" runat="server">
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+        <asp:Label ID="lblusuario" runat="server" Text="Nombre de Usuario:" AssociatedControlID="txtUsuario" CssClass="form-label" />
+        <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" />
+        
+        <asp:Label ID="lblContrasena" runat="server" Text="Contraseña:" AssociatedControlID="txtContrasena" CssClass="form-label" />
+        <asp:TextBox ID="txtContrasena" runat="server" TextMode="Password" CssClass="form-control" />
 
-        <p>
-            <asp:Panel ID="pnlLogin" runat="server">
-    <h2>Iniciar Sesión</h2>
-                <asp:Label ID="lblusuario" runat="server" Text="Nombre de Usuario:"></asp:Label>
-                &nbsp;&nbsp;
-                <asp:TextBox ID="txtUsuario" runat="server"></asp:TextBox>
-                <br />
-                <br />
-                &nbsp;<asp:Label ID="lblContrasena" runat="server" Text="Contraseña: "></asp:Label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="txtContrasena" runat="server" TextMode="Password"></asp:TextBox>
-                <br />
-                <br />
-                <asp:Button ID="btnIniciarSesion" runat="server" OnClick="btnIniciarSesion_Click" Text="Iniciar Sesión" />
-                &nbsp;&nbsp;&nbsp;<asp:Button ID="btnMostrarCrearUsuario" runat="server" OnClick="btnMostrarCrearUsuario_Click" Text="Crear Usuario" />
-                <br />
-</asp:Panel>
+        <div class="d-flex justify-content-between">
+          <asp:Button ID="btnIniciarSesion" runat="server" OnClick="btnIniciarSesion_Click" Text="Iniciar Sesión" CssClass="btn btn-primary" />
+          <asp:Button ID="btnMostrarCrearUsuario" runat="server" OnClick="btnMostrarCrearUsuario_Click" Text="Crear Usuario" CssClass="btn btn-secondary" />
+        </div>
+      </asp:Panel>
 
-<asp:Panel ID="pnlCrearUsuario" runat="server" Visible="false" Height="282px">
-    <h2>Crear Usuario</h2>
-    <asp:Label ID="lblUsuarioNuevo" runat="server" Text="Nombre de Usuario:"></asp:Label>
-    &nbsp;&nbsp;
-    <asp:TextBox ID="txtNuevoUsuario" runat="server"></asp:TextBox>
-    <br />
-    <br />
-    <asp:Label ID="lblContrasenaNueva" runat="server" Text="Contraseña:"></asp:Label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:TextBox ID="txtNuevoUsuario0" runat="server"></asp:TextBox>
-    <br />
-    <br />
-    <asp:Label ID="lblConfirmarContra" runat="server" Text="Confirmar contraseña:"></asp:Label>
-    <asp:TextBox ID="txtNuevoUsuario1" runat="server" OnTextChanged="txtNuevoUsuario1_TextChanged"></asp:TextBox>
-    <br />
-    <br />
-    <asp:Label ID="lblEmail" runat="server" Text="Correo electrónico:"></asp:Label>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:TextBox ID="txtNuevoUsuario2" runat="server"></asp:TextBox>
-    <br />
-    <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Text="Contraseña y confirmar contraseña deben coincidir."></asp:Label>
-    <br />
-    <asp:Button ID="btnCrearUsuario" runat="server" Text="Crear Usuario" OnClick="btnCrearUsuario_Click" />
-    <asp:Button ID="btnVolver" runat="server" OnClick="btnVolver_Click" Text="Volver" />
-    <br />
-</asp:Panel>
+      <asp:Panel ID="pnlCrearUsuario" runat="server" Visible="false">
+        <h2 class="text-center mb-4">Crear Usuario</h2>
 
+        <asp:Label ID="lblUsuarioNuevo" runat="server" Text="Nombre de Usuario:" AssociatedControlID="txtNuevoUsuario" CssClass="form-label" />
+        <asp:TextBox ID="txtNuevoUsuario" runat="server" CssClass="form-control" />
 
+        <asp:Label ID="lblContrasenaNueva" runat="server" Text="Contraseña:" AssociatedControlID="txtNuevoUsuario0" CssClass="form-label" />
+        <asp:TextBox ID="txtNuevoUsuario0" runat="server" CssClass="form-control" />
+
+        <asp:Label ID="lblConfirmarContra" runat="server" Text="Confirmar contraseña:" AssociatedControlID="txtNuevoUsuario1" CssClass="form-label" />
+        <asp:TextBox ID="txtNuevoUsuario1" runat="server" CssClass="form-control" OnTextChanged="txtNuevoUsuario1_TextChanged" />
+
+        <asp:Label ID="lblEmail" runat="server" Text="Correo electrónico:" AssociatedControlID="txtNuevoUsuario2" CssClass="form-label" />
+        <asp:TextBox ID="txtNuevoUsuario2" runat="server" CssClass="form-control" />
+
+        <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Text="Contraseña y confirmar contraseña deben coincidir." CssClass="mt-2 mb-3" />
+
+        <div class="d-flex justify-content-between">
+          <asp:Button ID="btnCrearUsuario" runat="server" Text="Crear Usuario" CssClass="btn btn-success" OnClick="btnCrearUsuario_Click" />
+          <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn my-btn" OnClick="btnVolver_Click" />
+        </div>
+      </asp:Panel>
+
+    </div>
+  </div>
 </asp:Content>

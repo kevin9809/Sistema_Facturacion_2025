@@ -47,14 +47,13 @@
             <li><a class="dropdown-item" href="/Pages/Client/Clientes.aspx">Clientes</a></li>
             <li><a class="dropdown-item" href="/Pages/Inventory/Inventario.aspx">Inventario</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Facturas.aspx">Facturas</a></li>
-            <li><a class="dropdown-item" href="Facturas.aspx">Facturas</a></li>
+            <li><a class="dropdown-item" href="/Pages/Facturas.aspx">Facturas</a></li>
           </ul>
         </li>
       </ul>
         <ul class="navbar-nav d-flex">
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-person-fill"></i>Login</a>
+                <a class="nav-link" href="/Pages/Login.aspx"><i class="bi bi-person-fill"></i>Login</a>
             </li>
         </ul>
     </div>

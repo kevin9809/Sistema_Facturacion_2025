@@ -5,7 +5,7 @@
 
     <div class="container mt-4">
         <h2 class="mb-4">Inventario</h2>
-        <form runat="server">
+
             <a href="AgregarInventario.aspx" class="btn btn-primary mb-3">Agregar a inventario</a>
 
             <asp:GridView ID="dgvInventario" runat="server" AutoGenerateColumns="false"
@@ -29,7 +29,7 @@
 
             </asp:GridView>
     
-        </form>
+
 
     </div>
     

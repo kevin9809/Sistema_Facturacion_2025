@@ -3,9 +3,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="container mt-4">
-        <h2 class="mb-4">Clientes registrados</h2>
+        <h2 class="mb-4 py-5">Clientes registrados</h2>
     
-        <form runat="server">        
+      
             <a href="RegistrarCliente.aspx" class="btn btn-primary mb-3">Agregar cliente</a>
 
             <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false"
@@ -25,6 +25,6 @@
                      </asp:TemplateField>
                  </Columns>
             </asp:GridView>
-        </form>
+
     </div>
 </asp:Content>
