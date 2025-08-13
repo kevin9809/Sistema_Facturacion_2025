@@ -6,7 +6,8 @@
 
     <div class="container mt-4">
         <h2 class="mb-4 text-danger">Eliminar de Inventario</h2>
-        <form runat="server" class="border p-4 rounded bg-light shadow-sm">
+
+        <div class="border p-4 rounded bg-light shadow-sm">
             <div class="alert alert-warning" role="alert">
                 ¿Está seguro de que desea eliminar este producto? Esta acción no se puede deshacer.
             </div>
@@ -45,7 +46,7 @@
 
             <asp:Button ID="btnEliminarInventario" runat="server" Text="Eliminar" CssClass="btn btn-danger"/>
             <a href="Inventario.aspx" class="btn btn-secondary">Cancelar</a>
-        </form>
+        </div>
     </div>
 
 </asp:Content>

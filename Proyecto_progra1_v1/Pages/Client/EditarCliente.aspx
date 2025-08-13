@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <h2 class="mb-4">Editar Cliente</h2>
 
-        <form runat="server" class="border p-4 rounded shadow-sm bg-light">
+        <div class="border p-4 rounded shadow-sm bg-light">
             <div class="mb-3">
                 <asp:Label ID="lbNombre" runat="server" Text="Nombre" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
@@ -29,7 +29,7 @@
 
             <asp:Button ID="btnEditarCliente" runat="server" Text="Editar" CssClass="btn btn-primary" />
             <a href="Clientes.aspx" class="btn btn-secondary">Cancelar</a>
-        </form>
+        </div>
     </div>
 
 </asp:Content>

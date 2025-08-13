@@ -5,7 +5,7 @@
     <div class="container mt-4">
         <h2 class="mb-4 text-danger">Eliminar Cliente</h2>
 
-        <form runat="server" class="border p-4 rounded bg-light shadow-sm">
+        <div class="border p-4 rounded bg-light shadow-sm">
             <div class="alert alert-warning" role="alert">
                 ¿Está seguro de que desea eliminar este cliente? Esta acción no se puede deshacer.
             </div>
@@ -36,6 +36,6 @@
                 <asp:Button ID="btnEliminarCliente" runat="server" Text="Eliminar" CssClass="btn btn-danger me-2" />
                 <a href="Clientes.aspx" class="btn btn-secondary">Cancelar</a>
             </div>
-        </form>
+        </div>
     </div>
 </asp:Content>
