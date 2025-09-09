@@ -1,7 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="RegistrarCliente.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Client.RegistrarCliente" %>
+﻿<%@ Page Title="Registrar Cliente" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="RegistrarCliente.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Client.RegistrarCliente" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
         <h2 class="mb-4">Registrar Cliente</h2>
@@ -26,10 +27,16 @@
                 <asp:Label ID="lbEmail" runat="server" Text="Email" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
             </div>
+            
+            <div class="mb-3">
+                <asp:Label ID="lbIdUsuario" runat="server" Text="ID Usuario" CssClass="form-label"></asp:Label>
+                <asp:TextBox ID="txtIdUsuario" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
 
-            <asp:Button ID="btnRegistrarCliente" runat="server" Text="Registrar" CssClass="btn btn-success" />
+            <asp:Button ID="btnRegistrarCliente" runat="server" Text="Registrar" CssClass="btn btn-success" OnClick="btnRegistrar_Click" />
             <a href="Clientes.aspx" class="btn btn-secondary">Cancelar</a>
+            
+            <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"></asp:Label>
         </div>
-
     </div>
 </asp:Content>

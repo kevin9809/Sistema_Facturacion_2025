@@ -1,38 +1,102 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+using System.Data.SqlClient;
+using System.Configuration;
 using System.Web.UI.WebControls;
 
 namespace Proyecto_progra1_v1.Pages
 {
     public partial class Clientes : System.Web.UI.Page
     {
+        // Instancia de tu clase de conexión a la BD
+        ConexionDB conexion = new ConexionDB();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                dgvClientes.DataSource = DatosTemporales();
-                dgvClientes.DataBind();
+                CargarClientes();
             }
         }
-        private DataTable DatosTemporales()
+
+        private void CargarClientes()
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID", typeof(int));
-            dt.Columns.Add("Nombre", typeof(string));
-            dt.Columns.Add("Direccion", typeof(string));
-            dt.Columns.Add("Teléfono", typeof(string));
-            dt.Columns.Add("Email", typeof(string));
+            try
+            {
+                using (SqlConnection con = conexion.Conectar())
+                {
+                    con.Open();
+                    // La consulta SELECT debe usar los nombres de columna correctos de tu base de datos
+                    string query = "SELECT ID_Cliente, Nombre, Direccion, Telefono, Email, ID_Usuario FROM Clientes";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
 
-            dt.Rows.Add(1, "Juan Pérez", "Av. Central #123", "555-1234", "juan@example.com");
-            dt.Rows.Add(2, "María López", "Calle 5 #45", "555-5678", "maria@example.com");
-            dt.Rows.Add(3, "Carlos Gómez", "Boulevard Norte #77", "555-9999", "carlos@example.com");
-            dt.Rows.Add(4, "Ana Torres", "Col. Jardines #15", "555-2222", "ana@example.com");
+                        dgvClientes.DataSource = dt;
+                        dgvClientes.DataBind();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar los clientes: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+            }
+        }
 
-            return dt;
+        protected void btnAgregarCliente_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("RegistrarCliente.aspx");
+        }
+
+        protected void dgvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int clienteID = Convert.ToInt32(e.CommandArgument);
+
+            if (e.CommandName == "EditarCliente")
+            {
+                Response.Redirect("EditarCliente.aspx?id=" + clienteID);
+            }
+            else if (e.CommandName == "EliminarCliente")
+            {
+                EliminarCliente(clienteID);
+            }
+        }
+
+        private void EliminarCliente(int clienteID)
+        {
+            try
+            {
+                using (SqlConnection con = conexion.Conectar())
+                {
+                    con.Open();
+                    string query = "DELETE FROM Clientes WHERE ID_Cliente = @ID";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", clienteID);
+                        int filasAfectadas = cmd.ExecuteNonQuery();
+
+                        if (filasAfectadas > 0)
+                        {
+                            lblMensaje.Text = "Cliente eliminado correctamente.";
+                            lblMensaje.ForeColor = System.Drawing.Color.Green;
+                            CargarClientes();
+                        }
+                        else
+                        {
+                            lblMensaje.Text = "No se pudo eliminar el cliente.";
+                            lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al eliminar el cliente: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+            }
         }
     }
 }

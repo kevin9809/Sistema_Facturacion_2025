@@ -15,6 +15,15 @@ namespace Proyecto_progra1_v1.Pages.Client
     {
 
         /// <summary>
+        /// Control hdnIdCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnIdCliente;
+
+        /// <summary>
         /// Control lbNombre.
         /// </summary>
         /// <remarks>
@@ -94,5 +103,14 @@ namespace Proyecto_progra1_v1.Pages.Client
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEditarCliente;
+
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

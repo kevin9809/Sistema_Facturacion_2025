@@ -48,6 +48,8 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -72,7 +74,7 @@
     <Content Include="Pages\Client\Clientes.aspx" />
     <Content Include="Pages\Client\EliminarCliente.aspx" />
     <Content Include="Pages\Client\RegistrarCliente.aspx" />
-    <Content Include="Pages\Facturas.aspx" />
+    <Content Include="Pages\Facturas\Facturas.aspx" />
     <Content Include="Pages\Home.aspx" />
     <Content Include="Pages\Inventory\AgregarInventario.aspx" />
     <Content Include="Pages\Inventory\EditarInventario.aspx" />
@@ -83,6 +85,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConexionDB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ConexionDB.Designer.cs">
+      <DependentUpon>ConexionDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -114,11 +122,10 @@
     <Compile Include="Pages\Client\RegistrarCliente.aspx.designer.cs">
       <DependentUpon>RegistrarCliente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Facturas.aspx.cs">
+    <Compile Include="Pages\Facturas\Facturas.aspx.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Facturas.aspx.designer.cs">
+    <Compile Include="Pages\Facturas\Facturas.aspx.designer.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Home.aspx.cs">
@@ -158,7 +165,6 @@
     </Compile>
     <Compile Include="Pages\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
