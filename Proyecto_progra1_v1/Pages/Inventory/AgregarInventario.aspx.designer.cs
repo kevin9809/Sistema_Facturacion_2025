@@ -96,13 +96,13 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         protected global::System.Web.UI.WebControls.Label lbCantidad;
 
         /// <summary>
-        /// Control txtCantidad.
+        /// Control txtStock.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
+        protected global::System.Web.UI.WebControls.TextBox txtStock;
 
         /// <summary>
         /// Control btnAgregarInventario.
@@ -112,5 +112,14 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarInventario;
+
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

@@ -30,12 +30,12 @@
 
             <div class="mb-3">
                 <asp:Label ID="lbCantidad" runat="server" Text="Cantidad" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtStock" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
             </div>
 
-            <asp:Button ID="btnAgregarInventario" runat="server" Text="Agregar" CssClass="btn btn-success" />
+            <asp:Button ID="btnAgregarInventario" runat="server" Text="Agregar" CssClass="btn btn-success" OnClick="btnGuardar_Click" />
             <a href="Inventario.aspx" class="btn btn-secondary">Cancelar</a>
+            <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"></asp:Label>
         </div>
-
     </div>
 </asp:Content>

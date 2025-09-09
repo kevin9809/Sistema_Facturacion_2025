@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditarCliente.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Client.ActualizarCliente" %>
+﻿<%@ Page Title="Editar Cliente" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditarCliente.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Client.ActualizarCliente" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -7,6 +7,8 @@
         <h2 class="mb-4">Editar Cliente</h2>
 
         <div class="border p-4 rounded shadow-sm bg-light">
+            <asp:HiddenField ID="hdnIdCliente" runat="server" />
+
             <div class="mb-3">
                 <asp:Label ID="lbNombre" runat="server" Text="Nombre" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
@@ -27,9 +29,10 @@
                 <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
             </div>
 
-            <asp:Button ID="btnEditarCliente" runat="server" Text="Editar" CssClass="btn btn-primary" />
+            <asp:Button ID="btnEditarCliente" runat="server" Text="Guardar Cambios" OnClick="btnEditarCliente_Click" CssClass="btn btn-primary" />
             <a href="Clientes.aspx" class="btn btn-secondary">Cancelar</a>
+
+            <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"></asp:Label>
         </div>
     </div>
-
 </asp:Content>
