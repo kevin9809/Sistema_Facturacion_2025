@@ -95,42 +95,7 @@ footer li {
     list-style: none;
 }
 
-/*Login*/
-/* Contenedor que ocupa toda la pantalla y hace blur de fondo */
-.login-wrapper {
-    height: 100vh; /* altura total de ventana */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255,255,255,0.15);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    position: relative;
-    z-index: 10;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Contenedor interno para los paneles */
-.login-content {
-    background: rgba(255,255,255,0.9);
-    padding: 30px 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    max-width: 400px;
-    width: 100%;
-}
-
-/* Etiquetas y inputs con Bootstrap */
-label, input[type="text"], input[type="password"], input[type="email"], .aspNetDisabled {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-}
-
-/* Styles para los formularios Clientes e Inventario */
+/* Styles para los formularios Clientes, Inventario y Login */
 .card {
     background-color: rgb(230, 210, 210, 0.1);
     padding: 2rem;

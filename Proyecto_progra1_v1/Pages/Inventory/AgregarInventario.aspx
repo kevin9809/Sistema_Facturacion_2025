@@ -9,7 +9,7 @@
         <div class="card">
 
             <div class="validadores">
-                <asp:Label ID="lbNombre" runat="server" Text="Nombre"></asp:Label>
+                <asp:Label ID="lbNombre" runat="server" Text="Nombre del producto"></asp:Label>
                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ErrorMessage="Campo requerido" ControlToValidate="txtNombre" ForeColor="#CC0000"></asp:RequiredFieldValidator>
             </div>
             <asp:TextBox ID="txtNombre" runat="server" CssClass="textBoxs"></asp:TextBox>
