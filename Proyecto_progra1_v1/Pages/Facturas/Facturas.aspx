@@ -1,13 +1,16 @@
 ﻿<%@ Page Title="Gestión de Facturas" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Facturas.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Facturas.Facturas" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         .form-group {
             margin-bottom: 1rem;
         }
+
         .invoice-header, .invoice-details {
             display: flex;
             justify-content: space-between;
         }
+
         .product-section, .totals-section {
             margin-top: 2rem;
             border-top: 1px solid #dee2e6;
@@ -17,21 +20,27 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container mt-4">
+    <div class="container mb-4" style="width: 400px">
 
-        <asp:Panel ID="pnlOpcionesFactura" runat="server" CssClass="d-flex justify-content-center mb-4">
-            <h2 class="me-4">Gestión de Facturas</h2>
-            <asp:Button ID="btnNuevaFactura" runat="server" Text="Crear Nueva Factura" CssClass="btn btn-primary me-2" OnClick="btnNuevaFactura_Click" />
-            <asp:Button ID="btnVerFactura" runat="server" Text="Buscar Factura Existente" CssClass="btn btn-secondary" OnClick="btnVerFactura_Click" />
+        <asp:Panel ID="pnlOpcionesFactura" runat="server">
+            <div class="card" style="text-align: center">
+                <h2>Gestión de Facturas</h2>
+                <h5>Selecciona una opción</h5>
+
+                <asp:Button ID="btnNuevaFactura" runat="server" Text="Crear factura" CssClass="buttonBlue" OnClick="btnNuevaFactura_Click" />
+                <asp:Button ID="btnVerFactura" runat="server" Text="Buscar factura existente" CssClass="buttonGreen" OnClick="btnVerFactura_Click" />
+            </div>
         </asp:Panel>
-        
+    </div>
+
+    <div class="container mb-4">
         <asp:Panel ID="pnlNuevaFactura" runat="server" Visible="false" CssClass="p-4 border rounded shadow-sm bg-light">
-            <h2>Crear Nueva Factura</h2>
+            <h2>Nueva factura</h2>
             <hr />
 
             <div class="invoice-header">
                 <div>
-                    <img src="../Imagenes/Logo.png" alt="Logo de la Empresa" style="width: 49px; height: 42px;" />
+                    <img src="../../Imagenes/Logo.png" alt="Logo de la Empresa" style="width: 49px; height: 42px;" />
                     <asp:Label ID="lblNombreEmpresa" runat="server" Text="Insight Furniture" CssClass="ms-2 fs-5"></asp:Label>
                 </div>
                 <div>
@@ -53,7 +62,7 @@
                 </div>
                 <div class="w-50">
                     <div class="form-group">
-                        <asp:Label ID="lblDocumento" runat="server" Text="Documento:"></asp:Label>
+                        <asp:Label ID="lblDocumento" runat="server" Text="Correo:"></asp:Label>
                         <asp:TextBox ID="txtDocumento" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                     </div>
                     <div class="form-group">
@@ -110,7 +119,9 @@
             </div>
 
         </asp:Panel>
+    </div>
 
+    <div class="container mb-4">
         <asp:Panel ID="pnlVerFactura" runat="server" Visible="false" CssClass="p-4 border rounded shadow-sm bg-light">
             <h2>Buscar y Ver Factura</h2>
             <hr />
@@ -121,7 +132,7 @@
                 <asp:Button ID="btnVolver2" runat="server" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" />
             </div>
             <asp:Label ID="lblBusquedaMensaje" runat="server" ForeColor="Red" CssClass="mt-2"></asp:Label>
-            
+
             <asp:Panel ID="pnlFacturaEncontrada" runat="server" Visible="false" CssClass="mt-4">
                 <h3>Detalles de la Factura #<asp:Label ID="lblFacturaEncontradaNum" runat="server"></asp:Label></h3>
                 <div class="client-details-section">
@@ -157,7 +168,6 @@
                 </asp:GridView>
             </asp:Panel>
         </asp:Panel>
-
     </div>
 
 </asp:Content>

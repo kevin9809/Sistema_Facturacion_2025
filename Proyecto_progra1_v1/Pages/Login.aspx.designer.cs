@@ -33,6 +33,15 @@ namespace Proyecto_progra1_v1.Pages
         protected global::System.Web.UI.WebControls.Label lblusuario;
 
         /// <summary>
+        /// Control rfvUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvUsuario;
+
+        /// <summary>
         /// Control txtUsuario.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace Proyecto_progra1_v1.Pages
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblContrasena;
+
+        /// <summary>
+        /// Control rfvContra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvContra;
 
         /// <summary>
         /// Control txtContrasena.
@@ -69,13 +87,13 @@ namespace Proyecto_progra1_v1.Pages
         protected global::System.Web.UI.WebControls.Button btnIniciarSesion;
 
         /// <summary>
-        /// Control btnMostrarCrearUsuario.
+        /// Control hlCrearUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnMostrarCrearUsuario;
+        protected global::System.Web.UI.WebControls.LinkButton hlCrearUsuario;
 
         /// <summary>
         /// Control pnlCrearUsuario.
@@ -96,6 +114,15 @@ namespace Proyecto_progra1_v1.Pages
         protected global::System.Web.UI.WebControls.Label lblUsuarioNuevo;
 
         /// <summary>
+        /// Control rfvUsuarioNuevo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvUsuarioNuevo;
+
+        /// <summary>
         /// Control txtNuevoUsuario.
         /// </summary>
         /// <remarks>
@@ -112,6 +139,15 @@ namespace Proyecto_progra1_v1.Pages
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblContrasenaNueva;
+
+        /// <summary>
+        /// Control rfvContraNueva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvContraNueva;
 
         /// <summary>
         /// Control txtNuevoUsuario0.
@@ -132,6 +168,15 @@ namespace Proyecto_progra1_v1.Pages
         protected global::System.Web.UI.WebControls.Label lblConfirmarContra;
 
         /// <summary>
+        /// Control cvConfirmarContra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cvConfirmarContra;
+
+        /// <summary>
         /// Control txtNuevoUsuario1.
         /// </summary>
         /// <remarks>
@@ -150,22 +195,22 @@ namespace Proyecto_progra1_v1.Pages
         protected global::System.Web.UI.WebControls.Label lblEmail;
 
         /// <summary>
-        /// Control txtNuevoUsuario2.
+        /// Control revEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNuevoUsuario2;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revEmail;
 
         /// <summary>
-        /// Control lblMensaje.
+        /// Control txtNuevoCorreo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.TextBox txtNuevoCorreo;
 
         /// <summary>
         /// Control btnCrearUsuario.
@@ -184,5 +229,14 @@ namespace Proyecto_progra1_v1.Pages
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVolver;
+
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

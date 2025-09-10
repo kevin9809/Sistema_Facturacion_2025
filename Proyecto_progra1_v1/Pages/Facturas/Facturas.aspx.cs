@@ -58,16 +58,6 @@ namespace Proyecto_progra1_v1.Pages.Facturas
             pnlOpcionesFactura.Visible = true;
         }
 
-        protected void txtCliente_TextChanged(object sender, EventArgs e)
-        {
-            // Este evento se dispara cuando el usuario deja el campo de texto del cliente
-            string clienteInput = txtCliente.Text.Trim();
-            if (!string.IsNullOrEmpty(clienteInput))
-            {
-                CargarDatosCliente(clienteInput);
-            }
-        }
-
         private void CargarDatosCliente(string clienteInput)
         {
             try
@@ -393,6 +383,12 @@ namespace Proyecto_progra1_v1.Pages.Facturas
             txtNumeroFactura.Text = string.Empty;
             lblBusquedaMensaje.Text = string.Empty;
             pnlFacturaEncontrada.Visible = false;
+        }
+
+        protected void txtCliente_TextChanged(object sender, EventArgs e)
+        {
+            string nombreCliente = txtCliente.Text.Trim();
+            CargarDatosCliente(nombreCliente);
         }
     }
 }

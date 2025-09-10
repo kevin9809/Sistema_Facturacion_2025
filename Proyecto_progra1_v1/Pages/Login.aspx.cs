@@ -11,7 +11,7 @@ namespace Proyecto_progra1_v1.Pages
 {
     // Clase de conexión a la base de datos.
     // Lo más recomendado es que esta clase esté en un archivo separado (ConexionDB.cs).
-    // Si la pones aquí, debe estar fuera de la clase 'Login' pero dentro del namespace.
+    
     public class ConexionDB
     {
         private string connectionString;
@@ -36,8 +36,7 @@ namespace Proyecto_progra1_v1.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // El Page_Load se ejecuta cada vez que la página carga.
-            // Para la lógica de base de datos, es mejor usar los eventos de los botones.
+            UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
         }
 
         protected void btnMostrarCrearUsuario_Click(object sender, EventArgs e)
@@ -107,51 +106,63 @@ namespace Proyecto_progra1_v1.Pages
             string nombreUsuario = txtNuevoUsuario.Text.Trim();
             string contrasena = txtNuevoUsuario0.Text.Trim();
             string confirmarContrasena = txtNuevoUsuario1.Text.Trim();
-            string email = txtNuevoUsuario2.Text.Trim();
-
-            if (contrasena != confirmarContrasena)
-            {
-                lblMensaje.Text = "Las contraseñas no coinciden.";
-                return;
-            }
-
-            if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contrasena) || string.IsNullOrEmpty(email))
-            {
-                lblMensaje.Text = "Todos los campos son obligatorios.";
-                return;
-            }
+            string email = txtNuevoCorreo.Text.Trim();
 
             try
             {
+                if (txtNuevoCorreo.Text == "")
+                {
+                    lblMensaje.Text = "El campo correo es requerido";
+                    return;
+                }
+
                 using (SqlConnection con = conexion.Conectar())
                 {
                     con.Open();
-                    string query = "INSERT INTO Usuarios (Nombre, Contraseña, Email, Rol) VALUES (@Nombre, @Contrasena, @Email, @Rol)";
 
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    string validarQuery = "SELECT COUNT(1) FROM Usuarios WHERE Email = @Email";
+                    using (SqlCommand cmdValidar = new SqlCommand(validarQuery, con))
                     {
-                        cmd.Parameters.AddWithValue("@Nombre", nombreUsuario);
-                        cmd.Parameters.AddWithValue("@Contrasena", contrasena);
-                        cmd.Parameters.AddWithValue("@Email", email);
-                        cmd.Parameters.AddWithValue("@Rol", "cliente");
+                        cmdValidar.Parameters.AddWithValue("@Email", email);
+                        int existe = (int)cmdValidar.ExecuteScalar();
 
-                        cmd.ExecuteNonQuery();
+                        if (existe > 0)
+                        {
+                            lblMensaje.Text = "El correo ya está registrado. Intenta con otro";
+                            return;
+                        }
+                        else
+                        {
+                            string query = @"INSERT INTO Usuarios (Nombre, Contraseña, Email, Rol) 
+                    VALUES (@Nombre, @Contrasena, @Email, @Rol)";
+
+                            using (SqlCommand cmd = new SqlCommand(query, con))
+                            {
+                                cmd.Parameters.AddWithValue("@Nombre", nombreUsuario);
+                                cmd.Parameters.AddWithValue("@Contrasena", contrasena);
+                                cmd.Parameters.AddWithValue("@Email", email);
+                                cmd.Parameters.AddWithValue("@Rol", "cliente");
+
+                                int resultado = cmd.ExecuteNonQuery();
+                                if (resultado == 0)
+                                {
+                                    lblMensaje.Text = "El correo ya está registrado, intenta con otro";
+                                }
+                                else
+                                {
+                                    lblMensaje.Text = "Usuario creado exitosamente. ¡Ahora puedes iniciar sesión!";
+                                    pnlCrearUsuario.Visible = false;
+                                    pnlLogin.Visible = true;
+                                }
+                            }
+                        }
                     }
                 }
-                lblMensaje.Text = "Usuario creado exitosamente. ¡Ahora puedes iniciar sesión!";
-                pnlCrearUsuario.Visible = false;
-                pnlLogin.Visible = true;
+                
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627) // Código de error de duplicado en SQL Server
-                {
-                    lblMensaje.Text = "El nombre de usuario o correo electrónico ya existe.";
-                }
-                else
-                {
-                    lblMensaje.Text = "Error al crear el usuario: " + ex.Message;
-                }
+                lblMensaje.Text = "Error al crear el usuario: " + ex.Message;
             }
             catch (Exception ex)
             {
@@ -179,7 +190,7 @@ namespace Proyecto_progra1_v1.Pages
             txtNuevoUsuario.Text = string.Empty;
             txtNuevoUsuario0.Text = string.Empty;
             txtNuevoUsuario1.Text = string.Empty;
-            txtNuevoUsuario2.Text = string.Empty;
+            txtNuevoCorreo.Text = string.Empty;
             lblMensaje.Text = string.Empty;
         }
     }
