@@ -13,7 +13,7 @@ namespace Proyecto_progra1_v1.Pages.Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // No se necesita ninguna lógica especial al cargar la página.
+            UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)

@@ -12,6 +12,8 @@ namespace Proyecto_progra1_v1.Pages.Inventory
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
+
             if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
@@ -45,7 +47,7 @@ namespace Proyecto_progra1_v1.Pages.Inventory
                 {
                     con.Open();
                     // Consulta SELECT que incluye la nueva columna 'Codigo'
-                    string query = "SELECT ProductoID, Codigo, NombreProducto, Descripcion, Precio, Stock, Categoria FROM Productos WHERE ProductoID = @ID";
+                    string query = "SELECT ProductoID, NombreProducto, Descripcion, Precio, Stock, Categoria FROM Productos WHERE ProductoID = @ID";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@ID", productoID);
@@ -56,7 +58,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
                             {
                                 // Llena los campos del formulario con los datos de la base de datos.
                                 hdnProductoID.Value = reader["ProductoID"].ToString();
-                                txtCodigo.Text = reader["Codigo"].ToString();
                                 txtNombre.Text = reader["NombreProducto"].ToString();
                                 txtDescripcion.Text = reader["Descripcion"].ToString();
                                 txtPrecio.Text = reader["Precio"].ToString();
@@ -87,7 +88,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
             {
                 // Usa el HiddenField para obtener el ID del producto
                 int productoID = Convert.ToInt32(hdnProductoID.Value);
-                string codigo = txtCodigo.Text.Trim();
                 string nombre = txtNombre.Text.Trim();
                 string descripcion = txtDescripcion.Text.Trim();
                 decimal precio = Convert.ToDecimal(txtPrecio.Text.Trim());
@@ -97,11 +97,10 @@ namespace Proyecto_progra1_v1.Pages.Inventory
                 {
                     con.Open();
                     // Consulta UPDATE para guardar los cambios, incluyendo la columna 'Codigo'
-                    string query = "UPDATE Productos SET Codigo = @Codigo, NombreProducto = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock WHERE ProductoID = @ID";
+                    string query = "UPDATE Productos SET NombreProducto = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock WHERE ProductoID = @ID";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        cmd.Parameters.AddWithValue("@Codigo", codigo);
                         cmd.Parameters.AddWithValue("@Nombre", nombre);
                         cmd.Parameters.AddWithValue("@Descripcion", descripcion);
                         cmd.Parameters.AddWithValue("@Precio", precio);

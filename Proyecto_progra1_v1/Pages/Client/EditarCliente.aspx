@@ -1,38 +1,49 @@
-﻿<%@ Page Title="Editar Cliente" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditarCliente.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Client.ActualizarCliente" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditarCliente.aspx.cs" Inherits="Proyecto_progra1_v1.Pages.Client.ActualizarCliente" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container mt-4">
-        <h2 class="mb-4">Editar Cliente</h2>
+    <div class="container mb-4" style="max-width: 600px">
 
-        <div class="border p-4 rounded shadow-sm bg-light">
-            <asp:HiddenField ID="hdnIdCliente" runat="server" />
+        <h2>Editar Cliente</h2>
 
-            <div class="mb-3">
-                <asp:Label ID="lbNombre" runat="server" Text="Nombre" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+        <asp:HiddenField ID="hdnIdCliente" runat="server" />
+
+        <div class="card">
+            <div class="validadores">
+                <asp:Label ID="lbNombre" runat="server" Text="Nombre"></asp:Label>
+                <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre" ErrorMessage="Campo requerido" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+            </div>
+            <asp:TextBox ID="txtNombre" runat="server" CssClass="textBoxs"></asp:TextBox>
+
+            <div class="validadores">
+                <asp:Label ID="lbDireccion" runat="server" Text="Dirección"></asp:Label>
+                <asp:RequiredFieldValidator ID="rfvDireccion" runat="server" ControlToValidate="txtDireccion" ErrorMessage="Campo requerido" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+            </div>
+            <asp:TextBox ID="txtDireccion" runat="server" CssClass="textBoxs"></asp:TextBox>
+
+            <div class="validadores">
+                <asp:Label ID="lbTelefono" runat="server" Text="Teléfono"></asp:Label>
+                <asp:RequiredFieldValidator ID="rfvTelefono" runat="server" ControlToValidate="txtTelefono" ErrorMessage="Campo requerido" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+            </div>
+            <asp:TextBox ID="txtTelefono" runat="server" CssClass="textBoxs"></asp:TextBox>
+
+            <div class="validadores">
+                <asp:Label ID="lbEmail" runat="server" Text="Email"></asp:Label>
+                <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail" ErrorMessage="Campo requerido" ForeColor="#CC0000" Visible="True"></asp:RequiredFieldValidator>
+            </div>
+            <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="textBoxs"></asp:TextBox>
+            <div style="text-align: center">
+                <asp:RegularExpressionValidator ID="revEmail" runat="server" ErrorMessage="Correo inválido" ControlToValidate="txtEmail" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ForeColor="#CC0000"></asp:RegularExpressionValidator>
             </div>
 
-            <div class="mb-3">
-                <asp:Label ID="lbDireccion" runat="server" Text="Dirección" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control"></asp:TextBox>
+            <div>
+                <asp:Button ID="btnEditarCliente" OnClick="btnEditarCliente_Click" runat="server" Text="Editar" CssClass="buttonBlue" />
+                <asp:Button ID="btnCancelarCliente" runat="server" Text="Volver" CssClass="buttonGray" CausesValidation="False" PostBackUrl="~/Pages/Client/Clientes.aspx" />
             </div>
-
-            <div class="mb-3">
-                <asp:Label ID="lbTelefono" runat="server" Text="Teléfono" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="txtTelefono" runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
-            </div>
-
-            <div class="mb-3">
-                <asp:Label ID="lbEmail" runat="server" Text="Email" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
-            </div>
-
-            <asp:Button ID="btnEditarCliente" runat="server" Text="Guardar Cambios" OnClick="btnEditarCliente_Click" CssClass="btn btn-primary" />
-            <a href="Clientes.aspx" class="btn btn-secondary">Cancelar</a>
 
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"></asp:Label>
+
         </div>
-    </div>
 </asp:Content>
