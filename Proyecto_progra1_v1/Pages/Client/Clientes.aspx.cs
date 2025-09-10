@@ -59,44 +59,6 @@ namespace Proyecto_progra1_v1.Pages
             {
                 Response.Redirect("EditarCliente.aspx?id=" + clienteID);
             }
-            else if (e.CommandName == "EliminarCliente")
-            {
-                EliminarCliente(clienteID);
-            }
-        }
-
-        private void EliminarCliente(int clienteID)
-        {
-            try
-            {
-                using (SqlConnection con = conexion.Conectar())
-                {
-                    con.Open();
-                    string query = "DELETE FROM Clientes WHERE ID_Cliente = @ID";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", clienteID);
-                        int filasAfectadas = cmd.ExecuteNonQuery();
-
-                        if (filasAfectadas > 0)
-                        {
-                            lblMensaje.Text = "Cliente eliminado correctamente.";
-                            lblMensaje.ForeColor = System.Drawing.Color.Green;
-                            CargarClientes();
-                        }
-                        else
-                        {
-                            lblMensaje.Text = "No se pudo eliminar el cliente.";
-                            lblMensaje.ForeColor = System.Drawing.Color.Red;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = "Error al eliminar el cliente: " + ex.Message;
-                lblMensaje.ForeColor = System.Drawing.Color.Red;
-            }
         }
     }
 }

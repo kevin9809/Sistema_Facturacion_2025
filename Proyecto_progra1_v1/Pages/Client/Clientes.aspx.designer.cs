@@ -15,13 +15,13 @@ namespace Proyecto_progra1_v1.Pages
     {
 
         /// <summary>
-        /// Control btnAgregarCliente.
+        /// Control btnRegistrarCliente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarCliente;
+        protected global::System.Web.UI.WebControls.Button btnRegistrarCliente;
 
         /// <summary>
         /// Control dgvClientes.

@@ -12,6 +12,7 @@ namespace Proyecto_progra1_v1.Pages.Client
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
             if (!IsPostBack)
             {
                 // Verifica si se pasó un ID de cliente en la URL

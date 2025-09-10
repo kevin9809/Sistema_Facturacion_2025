@@ -15,22 +15,13 @@ namespace Proyecto_progra1_v1.Pages.Inventory
     {
 
         /// <summary>
-        /// Control ID.
+        /// Control lbId.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ID;
-
-        /// <summary>
-        /// Control lbCodigo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCodigo;
+        protected global::System.Web.UI.WebControls.Label lbId;
 
         /// <summary>
         /// Control lbNombre.
@@ -69,12 +60,30 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         protected global::System.Web.UI.WebControls.Label lbCantidad;
 
         /// <summary>
-        /// Control btnEliminarInventario.
+        /// Control btnEliminarCliente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarInventario;
+        protected global::System.Web.UI.WebControls.Button btnEliminarCliente;
+
+        /// <summary>
+        /// Control btnCancelarCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelarCliente;
+
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

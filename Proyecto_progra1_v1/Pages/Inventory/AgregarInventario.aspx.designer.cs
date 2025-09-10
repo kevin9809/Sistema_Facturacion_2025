@@ -15,24 +15,6 @@ namespace Proyecto_progra1_v1.Pages.Inventory
     {
 
         /// <summary>
-        /// Control lbCodigo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCodigo;
-
-        /// <summary>
-        /// Control txtCodigo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigo;
-
-        /// <summary>
         /// Control lbNombre.
         /// </summary>
         /// <remarks>
@@ -40,6 +22,15 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbNombre;
+
+        /// <summary>
+        /// Control rfvNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
 
         /// <summary>
         /// Control txtNombre.
@@ -60,6 +51,15 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         protected global::System.Web.UI.WebControls.Label lbDescripcion;
 
         /// <summary>
+        /// Control rfvDescripcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescripcion;
+
+        /// <summary>
         /// Control txtDescripcion.
         /// </summary>
         /// <remarks>
@@ -76,6 +76,15 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbPrecio;
+
+        /// <summary>
+        /// Control rfvPrecio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPrecio;
 
         /// <summary>
         /// Control txtPrecio.
@@ -96,6 +105,15 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         protected global::System.Web.UI.WebControls.Label lbCantidad;
 
         /// <summary>
+        /// Control rfvCantidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCantidad;
+
+        /// <summary>
         /// Control txtStock.
         /// </summary>
         /// <remarks>
@@ -112,6 +130,15 @@ namespace Proyecto_progra1_v1.Pages.Inventory
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarInventario;
+
+        /// <summary>
+        /// Control btnCancelarInventario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelarInventario;
 
         /// <summary>
         /// Control lblMensaje.
