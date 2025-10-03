@@ -31,15 +31,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/Pages/Home.aspx">Home</a>
+          <a class="nav-link active" aria-current="page" href="/Pages/Client/Clientes.aspx">Clients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Financiamiento</a>
+          <a class="nav-link" href="/Pages/Inventory/Inventario.aspx">Inventario</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Ayuda</a>
+          <a class="nav-link" href="/Pages/Facturas/Facturas.aspx">Facturas</a>
         </li>
-        <li class="nav-item dropdown">
+        <%--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administrador
           </a>
@@ -49,13 +49,13 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/Pages/Facturas/Facturas.aspx">Facturas</a></li>
           </ul>
-        </li>
+        </li>--%>
       </ul>
-        <ul class="navbar-nav d-flex">
+        <%--<ul class="navbar-nav d-flex">
             <li class="nav-item">
                 <a class="nav-link" href="/Pages/Login.aspx"><i class="bi bi-person-fill"></i>Login</a>
             </li>
-        </ul>
+        </ul>--%>
     </div>
   </div>
 </nav>
