@@ -52,7 +52,7 @@
             <div class="invoice-details mt-4">
                 <div class="w-50 me-4">
                     <div class="form-group">
-                        <asp:Label ID="lblCliente" runat="server" Text="Cliente:"></asp:Label>
+                        <asp:Label ID="lblCliente" runat="server" Text="Nombre del Cliente:"></asp:Label>
                         <asp:TextBox ID="txtCliente" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtCliente_TextChanged"></asp:TextBox>
                     </div>
                     <div class="form-group">
