@@ -133,59 +133,40 @@
             </div>
             <asp:Label ID="lblBusquedaMensaje" runat="server" ForeColor="Red" CssClass="mt-2"></asp:Label>
 
-<asp:Panel ID="pnlFacturaEncontrada" runat="server" Visible="false" CssClass="mt-4">
-    <h3>Detalles de la Factura #<asp:Label ID="lblFacturaEncontradaNum" runat="server"></asp:Label></h3>
-    <div class="client-details-section">
-        <div class="form-group">
-            <asp:Label ID="lblClienteEncontrado" runat="server" Text="Cliente: "></asp:Label>
-            <asp:Label ID="lblClienteNombre" runat="server" Font-Bold="true"></asp:Label>
-        </div>
-        <div class="form-group">
-            <asp:Label ID="lblDireccionEncontrada" runat="server" Text="Dirección: "></asp:Label>
-            <asp:Label ID="lblDireccionFactura" runat="server" Font-Bold="true"></asp:Label>
-        </div>
-        <div class="form-group">
-            <asp:Label ID="lblTelefonoEncontrado" runat="server" Text="Teléfono: "></asp:Label>
-            <asp:Label ID="lblTelefonoFactura" runat="server" Font-Bold="true"></asp:Label>
-        </div>
-        <div class="form-group">
-            <asp:Label ID="lblCorreoEncontrado" runat="server" Text="Email: "></asp:Label>
-            <asp:Label ID="lblCorreo" runat="server" Font-Bold="true"></asp:Label>
-        </div>
-        <div class="form-group">
-            <asp:Label ID="lblFechaEncontrada" runat="server" Text="Fecha: "></asp:Label>
-            <asp:Label ID="lblFecha" runat="server" Font-Bold="true"></asp:Label>
-        </div>
-    </div>
-    
-    <asp:GridView ID="gvFacturaEncontradaDetalles" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
-        <Columns>
-            <asp:BoundField DataField="ProductoID" HeaderText="ID Artículo" />
-            <asp:BoundField DataField="NombreProducto" HeaderText="Descripción" />
-            <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
-            <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
-            <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
-        </Columns>
-    </asp:GridView>
-    
-    <%-- INICIO DE NUEVOS LABELS PARA MOSTRAR TOTALES --%>
-    <div class="totals-section text-end mt-4">
-        <div class="form-group d-flex justify-content-end align-items-center">
-            <asp:Label ID="lblSubtotalEncontrado" runat="server" Text="Subtotal: " CssClass="me-3"></asp:Label>
-            <asp:Label ID="lblTotalParcialFactura" runat="server" Font-Bold="true" CssClass="border p-1 w-25 text-end"></asp:Label>
-        </div>
-        <div class="form-group d-flex justify-content-end align-items-center">
-            <asp:Label ID="lblIVAEncontrado" runat="server" Text="IVA (13%): " CssClass="me-3"></asp:Label>
-            <asp:Label ID="lblIVAFactura" runat="server" Font-Bold="true" CssClass="border p-1 w-25 text-end"></asp:Label>
-        </div>
-        <div class="form-group d-flex justify-content-end align-items-center">
-            <asp:Label ID="lblTotalEncontrado" runat="server" Text="Total a Pagar: " CssClass="me-3 fs-5"></asp:Label>
-            <asp:Label ID="lblTotalFactura" runat="server" Font-Bold="true" CssClass="border p-1 w-25 text-end fs-5"></asp:Label>
-        </div>
-    </div>
-    <%-- FIN DE NUEVOS LABELS --%>
-
-</asp:Panel>
+            <asp:Panel ID="pnlFacturaEncontrada" runat="server" Visible="false" CssClass="mt-4">
+                <h3>Detalles de la Factura #<asp:Label ID="lblFacturaEncontradaNum" runat="server"></asp:Label></h3>
+                <div class="client-details-section">
+                    <div class="form-group">
+                        <asp:Label ID="lblClienteEncontrado" runat="server" Text="Cliente: "></asp:Label>
+                        <asp:Label ID="lblClienteNombre" runat="server" Font-Bold="true"></asp:Label>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lblDireccionEncontrada" runat="server" Text="Dirección: "></asp:Label>
+                        <asp:Label ID="lblDireccionFactura" runat="server" Font-Bold="true"></asp:Label>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lblTelefonoEncontrado" runat="server" Text="Teléfono: "></asp:Label>
+                        <asp:Label ID="lblTelefonoFactura" runat="server" Font-Bold="true"></asp:Label>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lblCorreoEncontrado" runat="server" Text="Email: "></asp:Label>
+                        <asp:Label ID="lblCorreo" runat="server" Font-Bold="true"></asp:Label>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lblFechaEncontrada" runat="server" Text="Fecha: "></asp:Label>
+                        <asp:Label ID="lblFecha" runat="server" Font-Bold="true"></asp:Label>
+                    </div>
+                </div>
+                <asp:GridView ID="gvFacturaEncontradaDetalles" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-striped">
+                    <Columns>
+                        <asp:BoundField DataField="ProductoID" HeaderText="ID Artículo" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+                        <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio" DataFormatString="{0:C}" />
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                        <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
+                    </Columns>
+                </asp:GridView>
+            </asp:Panel>
         </asp:Panel>
     </div>
 

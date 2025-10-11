@@ -94,13 +94,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Modelos\Entidades\Cliente.cs" />
-    <Compile Include="Modelos\Entidades\Factura.cs" />
-    <Compile Include="Modelos\Entidades\FacturaItem.cs" />
-    <Compile Include="Modelos\Entidades\Producto.cs" />
-    <Compile Include="Modelos\Repositorios\ClienteRepository.cs" />
-    <Compile Include="Modelos\Repositorios\FacturaRepository.cs" />
-    <Compile Include="Modelos\Repositorios\ProductoRepository.cs" />
     <Compile Include="Pages\Client\EditarCliente.aspx.cs">
       <DependentUpon>EditarCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -131,7 +124,6 @@
     </Compile>
     <Compile Include="Pages\Facturas\Facturas.aspx.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Facturas\Facturas.aspx.designer.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
@@ -206,7 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controladores\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
