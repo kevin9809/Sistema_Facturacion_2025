@@ -27,7 +27,7 @@
   <div class="d-flex justify-content-center gap-5 row">
     <div class="col">
       <i class="bi bi-truck display-4"></i>
-      <p>Envío rápido</p>
+      <p>Envío rápidoO</p>
     </div>
     <div class="col">
       <i class="bi bi-cash-stack display-4"></i>
