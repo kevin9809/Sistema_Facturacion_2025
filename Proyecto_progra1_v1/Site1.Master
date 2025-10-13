@@ -31,15 +31,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/Pages/Home.aspx">Home</a>
+          <a class="nav-link active" aria-current="page" href="/Pages/Client/Clientes.aspx"><i class="bi bi-people"></i>Clients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Financiamiento</a>
+          <a class="nav-link" href="/Pages/Inventory/Inventario.aspx"><i class="bi bi-clipboard-data"></i>Inventario</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Ayuda</a>
+          <a class="nav-link" href="/Pages/Facturas/Facturas.aspx"><i class="bi bi-receipt-cutoff"></i>Facturas</a>
         </li>
-        <li class="nav-item dropdown">
+        <%--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administrador
           </a>
@@ -49,13 +49,13 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/Pages/Facturas/Facturas.aspx">Facturas</a></li>
           </ul>
-        </li>
+        </li>--%>
       </ul>
-        <ul class="navbar-nav d-flex">
+        <%--<ul class="navbar-nav d-flex">
             <li class="nav-item">
                 <a class="nav-link" href="/Pages/Login.aspx"><i class="bi bi-person-fill"></i>Login</a>
             </li>
-        </ul>
+        </ul>--%>
     </div>
   </div>
 </nav>
@@ -67,62 +67,7 @@
     </div>
   </form>
      
-    <%-- Footer --%>
-    <footer class="footer-wrapp" id="footer">
-      <div class="row container footer-top ">
-        <img
-          src="https://res.cloudinary.com/dymsokiwr/image/upload/v1729572683/IF_Logo_BW_slqpml.png"
-          alt=""
-          class="col-sm-5 col-md"
-        />
-        <div class="col-sm-5 col-md">
-          <div class="content">
-            <p>Subscribe to our news letter</p>
-            <div class="input-group">
-              <input
-                type="email"
-                class="form-control"
-                placeholder="Enter your email"
-              ></input>
-              <button class="btn subscribe-btn" type="submit">
-                Subscribe Now
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row footer-links justify-content-center">
-        <div class="links col-2 text-center">
-          <p class="title ">About Insight</p>
-          <li>About</li>
-          <li>Careers</li>
-          <li>News</li>
-          <li>About Insight</li>
-        </div>
-        <div class="links  col-2 text-center">
-          <p class="title">Insight Help</p>
-          <li>Accessibility</li>
-          <li>Help Center</li>
-          <li>FAQ</li>
-          <li>Returns</li>
-          <li>Price Match</li>
-          <li>Child Safety</li>
-        </div>
-        <div class="links col-2 text-center">
-          <p class="title">Services</p>
-          <li>Financing</li>
-          <li>Rewards</li>
-          <li>Trade Program</li>
-          <li>Delivery Methods</li>
-        </div>
-        <div class="links  col-2 text-center">
-          <p class="title">Legal</p>
-          <li>Terms and Conditions</li>
-          <li>Offers & Details</li>
-          <li>Privacy Policy</li>
-        </div>
-      </div>
-    </footer> 
+   
 
 </body>
 </html>
