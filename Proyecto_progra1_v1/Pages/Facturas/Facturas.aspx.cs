@@ -4,31 +4,42 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.UI.WebControls;
+using Proyecto_progra1_v1.Modelos.Entidades;      
+using Proyecto_progra1_v1.Modelos.Repositorios;
 
-namespace Proyecto_progra1_v1.Pages.Facturas
+
+namespace Proyecto_progra1_v1.Pages.Facturas    
 {
-    // Clase que representa un artículo en el GridView de la factura.
-    [Serializable]
-    public class FacturaItem
-    {
-        public int ProductoID { get; set; }
-        public string NombreProducto { get; set; }
-        public decimal Precio { get; set; }
-        public int Cantidad { get; set; }
-        public decimal Total { get; set; }
-    }
 
     public partial class Facturas : System.Web.UI.Page
     {
         ConexionDB conexion = new ConexionDB();
         private const decimal IVA_RATE = 0.13m; // Tasa de IVA
+        private ClienteRepository clienteRepo = new ClienteRepository();
+        private FacturaRepository facturaRepo = new FacturaRepository();
+        private ProductoRepository productoRepo = new ProductoRepository();
+
+        private void CargarFacturaGridView()
+        {
+            // Asume que tu GridView se llama GridViewFactura. 
+            // Si tiene otro nombre (ej: gvArticulos), cámbialo.
+            if (Session["FacturaItems"] is List<FacturaItem> facturaItems)
+            {
+                gvFacturaDetalles.DataSource = facturaItems;
+                gvFacturaDetalles.DataBind();
+            }
+        }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 // Inicializa la lista de artículos de la factura en la sesión.
-                Session["FacturaItems"] = new List<FacturaItem>();
+                if (Session["FacturaItems"] == null)
+                {
+                    Session["FacturaItems"] = new List<FacturaItem>();
+                }
                 pnlOpcionesFactura.Visible = true;
                 pnlNuevaFactura.Visible = false;
                 pnlVerFactura.Visible = false;
@@ -62,36 +73,27 @@ namespace Proyecto_progra1_v1.Pages.Facturas
         {
             try
             {
-                using (SqlConnection con = conexion.Conectar())
+                // Llama al Repositorio para obtener la entidad Cliente
+                Cliente cliente = clienteRepo.ObtenerClientePorNombre(clienteInput);
+
+                if (cliente != null)
                 {
-                    con.Open();
-                    // Consulta para buscar cliente por nombre
-                    string query = "SELECT Direccion, Telefono, Email FROM Clientes WHERE Nombre = @Nombre";
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Nombre", clienteInput);
-                        SqlDataReader reader = cmd.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            txtDireccion.Text = reader["Direccion"].ToString();
-                            txtTelefono.Text = reader["Telefono"].ToString();
-                            txtDocumento.Text = reader["Email"].ToString(); // Asumimos que el "Documento" es el email en este caso, si hay una columna de documento en la tabla, se debe cambiar.
-                        }
-                        else
-                        {
-                            // Si no se encuentra el cliente, limpia los campos
-                            txtDireccion.Text = "";
-                            txtTelefono.Text = "";
-                            txtDocumento.Text = "";
-                        }
-                    }
+                    // Usa las propiedades de la entidad Cliente para rellenar los TextBox
+                    txtDireccion.Text = cliente.Direccion;
+                    txtTelefono.Text = cliente.Telefono;
+                    txtDocumento.Text = cliente.Email;
+                }
+                else
+                {
+                    // Si no se encuentra, limpia los campos
+                    txtDireccion.Text = "";
+                    txtTelefono.Text = "";
+                    txtDocumento.Text = "";
                 }
             }
             catch (Exception ex)
             {
-                // Manejo de errores
+                // El repositorio ya debería manejar errores internos, esto es para otros errores.
                 lblArticuloMensaje.Text = "Error al buscar cliente: " + ex.Message;
             }
         }
@@ -100,58 +102,46 @@ namespace Proyecto_progra1_v1.Pages.Facturas
         {
             try
             {
-                string articuloInput = txtArticulo.Text.Trim();
-                int cantidad;
+                string busquedaProducto = txtArticulo.Text.Trim();
+                int cantidad = int.Parse(txtCantidad.Text.Trim());
 
-                if (string.IsNullOrEmpty(articuloInput) || !int.TryParse(txtCantidad.Text.Trim(), out cantidad) || cantidad <= 0)
+                // 1. LLAMADA AL REPOSITORIO (M)
+                Producto productoEncontrado = productoRepo.ObtenerProductoPorIdONombre(busquedaProducto);
+
+                if (productoEncontrado == null)
                 {
-                    lblArticuloMensaje.Text = "Por favor, ingrese un artículo y una cantidad válida.";
+                    lblArticuloMensaje.Text = "Error: Producto no encontrado.";
                     return;
                 }
 
-                using (SqlConnection con = conexion.Conectar())
+                if (cantidad <= 0)
                 {
-                    con.Open();
-                    // Consulta para buscar artículo por nombre o ID en la tabla 'Productos'
-                    string query = "SELECT ProductoID, NombreProducto, Precio FROM Productos WHERE ProductoID = @Input OR NombreProducto = @Input";
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Input", articuloInput);
-                        SqlDataReader reader = cmd.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            int idArticulo = reader.GetInt32(0);
-                            string nombreArticulo = reader.GetString(1);
-                            decimal precio = reader.GetDecimal(2);
-                            decimal totalArticulo = precio * cantidad;
-
-                            var item = new FacturaItem
-                            {
-                                ProductoID = idArticulo,
-                                NombreProducto = nombreArticulo,
-                                Precio = precio,
-                                Cantidad = cantidad,
-                                Total = totalArticulo
-                            };
-
-                            // Agregar el nuevo item a la lista de la sesión
-                            var facturaItems = (List<FacturaItem>)Session["FacturaItems"];
-                            facturaItems.Add(item);
-
-                            // Actualizar el GridView y los totales
-                            gvFacturaDetalles.DataSource = facturaItems;
-                            gvFacturaDetalles.DataBind();
-                            CalcularTotales();
-                            lblArticuloMensaje.Text = ""; // Limpiar mensaje de error
-                        }
-                        else
-                        {
-                            lblArticuloMensaje.Text = "Artículo no encontrado.";
-                        }
-                    }
+                    lblArticuloMensaje.Text = "Error: La cantidad debe ser mayor a cero.";
+                    return;
                 }
+
+                // 2. Lógica de Negocio (Verificar Stock)
+                if (cantidad > productoEncontrado.Stock)
+                {
+                    lblArticuloMensaje.Text = $"Error: Stock insuficiente. Disponible: {productoEncontrado.Stock}";
+                    return;
+                }
+
+                // 3. Crear el item y agregarlo a la sesión (Vista/Controlador)
+                FacturaItem nuevoItem = new FacturaItem
+                {
+                    ProductoID = productoEncontrado.ProductoID,
+                    NombreProducto = productoEncontrado.NombreProducto,
+                    Precio = productoEncontrado.Precio,
+                    Cantidad = cantidad,
+                    Total = productoEncontrado.Precio * cantidad
+                };
+
+                // ... El resto de tu lógica para agregar a la Session y actualizar el GridView ...
+                List<FacturaItem> facturaItems = (List<FacturaItem>)Session["FacturaItems"];
+                facturaItems.Add(nuevoItem);
+                CargarFacturaGridView(); // El método que hace DataBind
+                CalcularTotales();
             }
             catch (Exception ex)
             {
@@ -192,99 +182,58 @@ namespace Proyecto_progra1_v1.Pages.Facturas
         {
             try
             {
-                // Validación básica de campos
                 if (string.IsNullOrEmpty(txtCliente.Text) || ((List<FacturaItem>)Session["FacturaItems"]).Count == 0)
                 {
                     lblArticuloMensaje.Text = "Por favor, seleccione un cliente y agregue al menos un artículo.";
                     return;
                 }
 
-                using (SqlConnection con = conexion.Conectar())
+                int clienteID = ObtenerIdCliente(txtCliente.Text.Trim());
+                if (clienteID == -1)
                 {
-                    con.Open();
-                    SqlTransaction transaction = con.BeginTransaction();
-
-                    try
-                    {
-                        // 1. Insertar en la tabla Facturas
-                        string insertFacturaQuery = "INSERT INTO Facturas (ClienteID, Fecha, Total) VALUES (@ClienteID, @Fecha, @Total); SELECT SCOPE_IDENTITY();";
-
-                        int clienteID = ObtenerIdCliente(txtCliente.Text.Trim());
-                        if (clienteID == -1)
-                        {
-                            throw new Exception("Cliente no encontrado.");
-                        }
-
-                        // Calcular el total de la factura
-                        decimal totalFactura = 0;
-                        var facturaItems = (List<FacturaItem>)Session["FacturaItems"];
-                        foreach (var item in facturaItems)
-                        {
-                            totalFactura += item.Total;
-                        }
-
-                        SqlCommand cmdFactura = new SqlCommand(insertFacturaQuery, con, transaction);
-                        cmdFactura.Parameters.AddWithValue("@ClienteID", clienteID);
-                        cmdFactura.Parameters.AddWithValue("@Fecha", DateTime.Now);
-                        cmdFactura.Parameters.AddWithValue("@Total", totalFactura);
-
-                        int facturaID = Convert.ToInt32(cmdFactura.ExecuteScalar());
-
-                        // 2. Insertar en la tabla DetalleFactura
-                        string insertDetalleQuery = "INSERT INTO DetalleFactura (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal) VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal)";
-
-                        foreach (var item in facturaItems)
-                        {
-                            SqlCommand cmdDetalle = new SqlCommand(insertDetalleQuery, con, transaction);
-                            cmdDetalle.Parameters.AddWithValue("@FacturaID", facturaID);
-                            cmdDetalle.Parameters.AddWithValue("@ProductoID", item.ProductoID);
-                            cmdDetalle.Parameters.AddWithValue("@Cantidad", item.Cantidad);
-                            cmdDetalle.Parameters.AddWithValue("@PrecioUnitario", item.Precio);
-                            cmdDetalle.Parameters.AddWithValue("@Subtotal", item.Total);
-
-                            cmdDetalle.ExecuteNonQuery();
-                        }
-
-                        // 3. Confirmar la transacción y mostrar mensaje de éxito
-                        transaction.Commit();
-                        lblArticuloMensaje.Text = "Factura número " + facturaID + " creada exitosamente.";
-                        lblArticuloMensaje.ForeColor = System.Drawing.Color.Green;
-
-                        LimpiarFormularioFactura();
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        lblArticuloMensaje.Text = "Error al guardar la factura: " + ex.Message;
-                        lblArticuloMensaje.ForeColor = System.Drawing.Color.Red;
-                    }
+                    throw new Exception("Cliente no encontrado o ID inválido.");
                 }
+
+                // --- CÓDIGO NUEVO Y MODIFICADO ---
+
+                // 1. Obtener los ítems y calcular el Subtotal
+                decimal subtotalFactura = 0;
+                var facturaItems = (List<FacturaItem>)Session["FacturaItems"];
+
+                foreach (var item in facturaItems)
+                {
+                    subtotalFactura += item.Total; // item.Total ya es Cantidad * Precio
+                }
+
+                // 2. Calcular el IVA y el Total
+                // Nota: Asumo que tienes una constante o campo llamado IVA_RATE = 0.13m (13%)
+                const decimal IVA_RATE = 0.13m; // Asegúrate de que esta constante esté definida en tu clase
+
+                decimal ivaFactura = subtotalFactura * IVA_RATE;
+                decimal totalFactura = subtotalFactura + ivaFactura;
+
+                // 3. Llamar al repositorio con los 3 valores: Subtotal, IVA y Total
+                // DEBES MODIFICAR LA FIRMA DE GuardarFactura en FacturaRepository.cs para recibir estos 3 valores
+                int facturaID = facturaRepo.GuardarFactura(clienteID, subtotalFactura, ivaFactura, totalFactura, facturaItems);
+
+                // --- FIN DEL CÓDIGO MODIFICADO ---
+
+                lblArticuloMensaje.Text = "Factura número " + facturaID + " creada exitosamente.";
+                lblArticuloMensaje.ForeColor = System.Drawing.Color.Green;
+
+                LimpiarFormularioFactura();
             }
             catch (Exception ex)
             {
-                lblArticuloMensaje.Text = "Error de conexión o de datos: " + ex.Message;
+                lblArticuloMensaje.Text = "Error al guardar la factura: " + ex.Message;
                 lblArticuloMensaje.ForeColor = System.Drawing.Color.Red;
             }
         }
 
         private int ObtenerIdCliente(string nombreCliente)
         {
-            int clienteID = -1;
-            using (SqlConnection con = conexion.Conectar())
-            {
-                con.Open();
-                string query = "SELECT ID_Cliente FROM Clientes WHERE Nombre = @Nombre";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@Nombre", nombreCliente);
-                    object result = cmd.ExecuteScalar();
-                    if (result != null)
-                    {
-                        clienteID = Convert.ToInt32(result);
-                    }
-                }
-            }
-            return clienteID;
+            // Llama al Repositorio para obtener solo el ID.
+            return clienteRepo.ObtenerIdCliente(nombreCliente);
         }
 
         protected void btnBuscarFactura_Click(object sender, EventArgs e)
@@ -299,58 +248,51 @@ namespace Proyecto_progra1_v1.Pages.Facturas
                     return;
                 }
 
-                using (SqlConnection con = conexion.Conectar())
+                // --- INICIO DE LA REFACTORIZACIÓN (USO DEL REPOSITORIO) ---
+
+                // 1. Llamar al repositorio para obtener la factura COMPLETA (Cabecera y Detalles)
+                // Necesitas un método en ClienteRepository que te devuelva el Cliente completo o el nombre
+                Factura factura = facturaRepo.ObtenerFacturaPorId(numeroFactura);
+
+                if (factura != null)
                 {
-                    con.Open();
-                    string queryDetalles = "SELECT T2.ProductoID, T1.NombreProducto AS Descripcion, T2.PrecioUnitario, T2.Cantidad, T2.Subtotal AS Total " +
-                                           "FROM DetalleFactura T2 " +
-                                           "INNER JOIN Productos T1 ON T2.ProductoID = T1.ProductoID " +
-                                           "WHERE T2.FacturaID = @FacturaID";
+                    // 2. Obtener los datos del cliente por su ID (usando el repositorio)
+                    // Asumo que tu ClienteRepository tiene un método para obtener el cliente completo por ID
+                    Cliente cliente = clienteRepo.ObtenerClientePorId(factura.ClienteID);
 
-                    string queryCliente = "SELECT T1.Nombre, T1.Direccion, T1.Telefono, T1.Email, T2.Fecha FROM Clientes T1 " +
-                                          "INNER JOIN Facturas T2 ON T1.ID_Cliente = T2.ClienteID " +
-                                          "WHERE T2.FacturaID = @FacturaID";
-
-                    using (SqlCommand cmdDetalles = new SqlCommand(queryDetalles, con))
+                    // 3. Rellenar los Labels de Cliente y Cabecera
+                    if (cliente != null)
                     {
-                        cmdDetalles.Parameters.AddWithValue("@FacturaID", numeroFactura);
-                        DataTable dt = new DataTable();
-                        SqlDataAdapter da = new SqlDataAdapter(cmdDetalles);
-                        da.Fill(dt);
-
-                        if (dt.Rows.Count > 0)
-                        {
-                            // Se encontró la factura, ahora busca los datos del cliente
-                            using (SqlCommand cmdCliente = new SqlCommand(queryCliente, con))
-                            {
-                                cmdCliente.Parameters.AddWithValue("@FacturaID", numeroFactura);
-                                SqlDataReader reader = cmdCliente.ExecuteReader();
-                                if (reader.Read())
-                                {
-                                    lblClienteNombre.Text = reader["Nombre"].ToString();
-                                    lblDireccionFactura.Text = reader["Direccion"].ToString();
-                                    lblTelefonoFactura.Text = reader["Telefono"].ToString();
-                                    lblCorreo.Text = reader["Email"].ToString();
-                                    lblFecha.Text = Convert.ToDateTime(reader["Fecha"]).ToString("dd/MM/yyyy");
-                                }
-                                reader.Close();
-                            }
-
-                            gvFacturaEncontradaDetalles.DataSource = dt;
-                            gvFacturaEncontradaDetalles.DataBind();
-                            lblBusquedaMensaje.Text = "Factura encontrada.";
-                            lblBusquedaMensaje.ForeColor = System.Drawing.Color.Green;
-                            pnlFacturaEncontrada.Visible = true;
-                            lblFacturaEncontradaNum.Text = numeroFactura.ToString();
-                        }
-                        else
-                        {
-                            lblBusquedaMensaje.Text = "No se encontró la factura con el número proporcionado.";
-                            lblBusquedaMensaje.ForeColor = System.Drawing.Color.Red;
-                            pnlFacturaEncontrada.Visible = false;
-                        }
+                        lblClienteNombre.Text = cliente.Nombre; // Asumo que la propiedad es 'Nombre'
+                        lblDireccionFactura.Text = cliente.Direccion;
+                        lblTelefonoFactura.Text = cliente.Telefono;
+                        lblCorreo.Text = cliente.Email; // O la propiedad que uses para Email/Documento
                     }
+
+                    lblFecha.Text = factura.Fecha.ToString("dd/MM/yyyy");
+
+                    // 4. MOSTRAR LOS NUEVOS TOTALES (Subtotal e IVA)
+                    lblTotalParcialFactura.Text = factura.SubtotalFactura.ToString("N2"); // Necesitas crear este Label en tu ASPX
+                    lblIVAFactura.Text = factura.IVAFactura.ToString("N2");             // Necesitas crear este Label en tu ASPX
+                    lblTotalFactura.Text = factura.Total.ToString("N2");             // Necesitas crear este Label en tu ASPX
+
+                    // 5. Cargar los detalles en el GridView de búsqueda
+                    gvFacturaEncontradaDetalles.DataSource = factura.Items; // Usar la lista de ítems cargada por el repositorio
+                    gvFacturaEncontradaDetalles.DataBind();
+
+                    lblBusquedaMensaje.Text = "Factura encontrada.";
+                    lblBusquedaMensaje.ForeColor = System.Drawing.Color.Green;
+                    pnlFacturaEncontrada.Visible = true;
+                    lblFacturaEncontradaNum.Text = numeroFactura.ToString();
                 }
+                else
+                {
+                    lblBusquedaMensaje.Text = "No se encontró la factura con el número proporcionado.";
+                    lblBusquedaMensaje.ForeColor = System.Drawing.Color.Red;
+                    pnlFacturaEncontrada.Visible = false;
+                }
+
+                // --- FIN DE LA REFACTORIZACIÓN ---
             }
             catch (Exception ex)
             {
