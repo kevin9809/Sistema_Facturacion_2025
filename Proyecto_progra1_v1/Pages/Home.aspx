@@ -13,7 +13,7 @@
     </div>
     <!-- Información -->
     <div class="section-info col-md-3 d-flex flex-column justify-content-center p-4 text-center">
-      <h2>Muebles Modernos</h2>
+      <h2>Muebles Modernos MVC</h2>
       <p>Descubre nuestra colección de muebles de última tendencia para tu hogar.</p>
       <a href="#" class="btn my-btn">Comprar Ahora</a>
     </div>
