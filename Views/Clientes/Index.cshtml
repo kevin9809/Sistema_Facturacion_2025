@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Proyecto_MVC.Models.Clientes>
+
+@{
+    ViewBag.Title = "Clientes registrados";
+}
+
+<div class="container mt-4">
+    <h2>Clientes registrados</h2>
+
+    <a href="@Url.Action("Crear", "Clientes")" class="btn btn-primary mb-3">Agregar Cliente</a>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>ID de Usuario</th>
+                <th>Funciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var cliente in Model)
+                {
+                    <tr>
+                        <td>@cliente.ID_Cliente</td>
+                        <td>@cliente.Nombre</td>
+                        <td>@cliente.Direccion</td>
+                        <td>@cliente.Telefono</td>
+                        <td>@cliente.Email</td>
+                        <td>@cliente.ID_Usuario</td>
+                        <td>
+                            <a href="@Url.Action("Editar", "Clientes", new { id = cliente.ID_Cliente })" class="text-primary me-2">Editar</a>
+                            <a href="@Url.Action("Eliminar", "Clientes", new { id = cliente.ID_Cliente })" class="text-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No hay clientes registrados.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Mensaje as string))
+    {
+        <div class="text-danger">@ViewBag.Mensaje</div>
+    }
+</div>
