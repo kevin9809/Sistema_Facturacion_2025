@@ -1,26 +1,54 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title - Sistema de Facturacion 2025</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @*Agregando Bootstrap icons al proyecto*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light">
         <div class="container">
-            @Html.ActionLink("Sistema de facturación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                <img src="https://res.cloudinary.com/dymsokiwr/image/upload/v1729572683/IF_Logo_Color_xrjsyf.png"
+                     alt="Home" width="200">
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Clientes", "Index", "Clientes", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Inventario", "Index", "Inventario", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Facturas", "Index", "Facturas", new { area = "" }, new { @class = "nav-link" })</li>
+                <ul class="navbar-nav flex-grow-1 h4">
+                    @*<li>@Html.ActionLink("Clientes", "Index", "Clientes", new { area = "" }, new { @class = "nav-link" })</li>*@
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Clientes")">
+                            <i class="bi bi-people"></i> Clientes
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Inventario")">
+                            <i class="bi bi-file-text"></i> Inventario
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Facturas")">
+                            <i class="bi bi-receipt-cutoff"></i> Facturas
+                        </a>
+                    </li>
+
+                    @*<li>@Html.ActionLink("Inventario", "Index", "Inventario", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Facturas", "Index", "Facturas", new { area = "" }, new { @class = "nav-link" })</li>*@
                 </ul>
             </div>
         </div>
@@ -29,7 +57,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - Sistema de Facturacion 2025</p>
         </footer>
     </div>
 
