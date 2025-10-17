@@ -1,0 +1,54 @@
+﻿@model Proyecto_MVC.Models.Facturas
+@{
+    ViewBag.Title = "Detalles de la Factura";
+}
+
+<h2>Detalles de la Factura #@Model.FacturaID</h2>
+
+<div>
+    <p>Cliente: <strong>@Model.NombreCliente</strong></p>
+    <p>Dirección: @Model.DireccionCliente</p>
+    <p>Email: @Model.EmailCliente</p>
+    <p>Fecha: @Model.Fecha.ToString("dd/MM/yyyy")</p>
+</div>
+
+<h4 class="mt-4">Artículos</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID Artículo</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <<tr>
+    <td>@item.ProductoID</td>
+    @**CORRECCIÓN:** Usar NombreProducto para la Descripción (como discutimos) *@
+    <td>@item.NombreProducto</td>
+    @**CORRECCIÓN:** Usar Precio para Precio Unitario *@
+    <td>@item.Precio.ToString("C")</td>
+    <td>@item.Cantidad</td>
+    <td>@item.Total.ToString("C")</td>
+</tr>
+        }
+    </tbody>
+</table>
+
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-6">
+        <p>Subtotal: <strong>@Model.SubtotalFactura.ToString("C")</strong></p>
+        <p>
+            IVA (@ViewBag.IVAPorcentaje%):
+            <strong>@Model.IVAFactura.ToString("C")</strong>
+        </p>
+        <h4>Total a Pagar: <strong>@Model.Total.ToString("C")</strong></h4>
+    </div>
+</div>
+
+@Html.ActionLink("Volver a Listado", "Index", "Facturas", null, new { @class = "btn btn-secondary mt-4" })
+
