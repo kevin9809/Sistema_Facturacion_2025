@@ -133,5 +133,72 @@ namespace Proyecto_MVC.Repositorio
                 Console.WriteLine("Error al elimninar producto: " + ex.Message);
             }
         }
+        public Productos ObtenerProductoPorNomOId(string articulo)
+        {
+            Productos producto = null;
+            int id;
+
+            // Intenta determinar si el input es un ID numérico
+            bool esId = int.TryParse(articulo, out id);
+
+            try
+            {
+                // Asumiendo que '_conexion' es una instancia de tu clase Conexion
+                using (SqlConnection con = conexion.Conectar())
+                {
+                    con.Open();
+                    string query = "";
+
+                    // Importante: La tabla en la DB es 'Inventario', y las columnas deben coincidir
+                    string campos = "ProductoID, NombreProducto, Descripcion, Precio, Stock, Categoria";
+
+                    if (esId)
+                    {
+                        // Busca por el ID exacto
+                        query = $"SELECT {campos} FROM dbo.Productos WHERE ProductoID = @Articulo AND Stock > 0";
+                    }
+                    else
+                    {
+                        // Busca por nombre (LIKE) y asegura que haya stock disponible
+                        query = $"SELECT {campos} FROM dbo.Productos WHERE NombreProducto LIKE @Articulo AND Stock > 0";
+                    }
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+
+                    if (esId)
+                    {
+                        cmd.Parameters.AddWithValue("@Articulo", id);
+                    }
+                    else
+                    {
+                       
+                        cmd.Parameters.AddWithValue("@Articulo", "%" + articulo + "%");
+                    }
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            producto = new Productos 
+                            {
+                                ProductoID = Convert.ToInt32(reader["ProductoID"]),
+                                NombreProducto = reader["NombreProducto"].ToString(),
+                                Descripcion = reader["Descripcion"].ToString(),
+                                Precio = Convert.ToDecimal(reader["Precio"]),
+                                Stock = Convert.ToInt32(reader["Stock"]), 
+                                Categoria = reader["Categoria"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Siempre es bueno lanzar una excepción para que el controlador pueda manejar el error
+                throw new Exception("Error al obtener producto por nombre o ID en el repositorio: " + ex.Message);
+            }
+
+            return producto;
+        }
     }
 }

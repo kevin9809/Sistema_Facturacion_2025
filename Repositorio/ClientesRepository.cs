@@ -131,5 +131,49 @@ namespace Proyecto_MVC.Repositorio
                 Console.WriteLine("Error al eliminar cliente: " + ex.Message);
             }
         }
+
+        public Clientes ObtenerClientePorNombre(string nombreCliente)
+        {
+            Clientes cliente = null;
+            try
+            {
+                using (SqlConnection con = conexion.Conectar())
+                {
+                    con.Open();
+                    // Usamos LIKE para buscar nombres parciales o exactos
+                    string query = "SELECT ID_Cliente, Nombre, Direccion, Telefono, Email, ID_Usuario FROM Clientes WHERE Nombre LIKE @NombreCliente";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        // Agregamos comodines '%' para buscar coincidencias parciales
+                        cmd.Parameters.AddWithValue("@NombreCliente", "%" + nombreCliente + "%");
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                cliente = new Clientes
+                                {
+                                    ID_Cliente = reader.GetInt32(0),
+                                    Nombre = reader.GetString(1),
+                                    Direccion = reader.GetString(2),
+                                    Telefono = reader.GetString(3),
+                                    Email = reader.GetString(4),
+                                    // Aseguramos que la columna no sea NULL antes de leerla
+                                    ID_Usuario = reader.IsDBNull(5) ? 0 : reader.GetInt32(5)
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // En un proyecto real, se debe registrar la excepción (log)
+                // Por ahora, lanzamos para depuración:
+                throw new Exception("Error al obtener cliente por nombre: " + ex.Message);
+            }
+            return cliente;
+        }
     }
 }
