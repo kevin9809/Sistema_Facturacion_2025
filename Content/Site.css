@@ -73,7 +73,7 @@ footer {
     }
 
     footer .subscribe-btn {
-        background-color: black !important;
+        background-color: var(--palette4);
     }
 
 .footer-links {
