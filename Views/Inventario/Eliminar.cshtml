@@ -1,64 +1,47 @@
 ﻿@model Proyecto_MVC.Models.Productos
 
 @{
-    ViewBag.Title = "Eliminar";
+    ViewBag.Title = "Eliminar Producto";
 }
 
-<h2>Eliminar</h2>
-
-<h3>¿Está seguro de que desea eliminar este producto? Esta acción no se puede deshacer.</h3>
-<div>
-    <h4>Productos</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreProducto)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NombreProducto)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Stock)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Stock)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 700px;">
+        <div class="card-header bg-danger text-white text-center rounded-top-4">
+            <h2 class="mb-0">Eliminar Producto</h2>
         </div>
-    }
+
+        <div class="card-body">
+            <h4 class="text-center text-danger mb-4">
+                ¿Está seguro de que desea eliminar este producto? <br />
+                <small class="text-muted">Esta acción no se puede deshacer.</small>
+            </h4>
+
+            <dl class="row px-4">
+                <dt class="col-sm-4 fw-semibold text-end">Nombre del Producto:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.NombreProducto)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-end">Descripción:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Descripcion)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-end">Precio:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Precio)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-end">Stock:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Stock)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-end">Categoría:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Categoria)</dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="d-flex justify-content-center mt-4 gap-3">
+                    <input type="submit" value="Eliminar" class="btn btn-danger px-4" />
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary px-4" })
+                </div>
+            }
+        </div>
+    </div>
 </div>

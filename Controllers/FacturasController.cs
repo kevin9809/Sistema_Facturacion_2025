@@ -15,11 +15,33 @@ namespace Proyecto_MVC.Controllers
         private const decimal IVA_RATE = 0.13m;
 
         // GET: Facturas/Index
+
+        //testing new ViewContext search all
         public ActionResult Index()
         {
             // Mostrar lista de facturas
             return View(); // Views/Facturas/Index.cshtml
         }
+        ///////
+        //public ActionResult Index(string search)
+        //{
+        //    var facturas = _facturaRepo.ObtenerTodas();
+
+        //    if (!string.IsNullOrEmpty(search))
+        //    {
+        //        facturas = facturas
+        //            .Where(f => f.NombreCliente.Contains(search, StringComparison.OrdinalIgnoreCase)
+        //                     || f.FacturaID.ToString().Contains(search))
+        //            .ToList();
+        //    }
+
+        //    return View(facturas);
+        //}
+
+
+
+
+        //End testing
 
         // GET: Facturas/NuevaFactura
         public ActionResult NuevaFactura()
