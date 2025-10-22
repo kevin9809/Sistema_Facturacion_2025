@@ -1,0 +1,48 @@
+﻿@model Proyecto_MVC.Models.Clientes
+
+@{
+    ViewBag.Title = "Eliminar Cliente";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 600px;">
+        <div class="card-header bg-danger text-white text-center rounded-top-4">
+            <h2 class="mb-0">Eliminar Cliente</h2>
+        </div>
+        <div class="card-body text-center">
+            <p class="fs-5 mb-4 text-muted">
+                ¿Está seguro de que desea eliminar este cliente?
+                <strong class="text-danger">Esta acción no se puede deshacer.</strong>
+            </p>
+
+            <div class="text-start px-3">
+                <dl class="row">
+                    <dt class="col-sm-4 fw-semibold">@Html.DisplayNameFor(model => model.Nombre)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre)</dd>
+
+                    <dt class="col-sm-4 fw-semibold">@Html.DisplayNameFor(model => model.Direccion)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Direccion)</dd>
+
+                    <dt class="col-sm-4 fw-semibold">@Html.DisplayNameFor(model => model.Telefono)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Telefono)</dd>
+
+                    <dt class="col-sm-4 fw-semibold">@Html.DisplayNameFor(model => model.Email)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+                    <dt class="col-sm-4 fw-semibold">@Html.DisplayNameFor(model => model.ID_Usuario)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.ID_Usuario)</dd>
+                </dl>
+            </div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <input type="submit" value="Eliminar" class="btn btn-danger px-4" />
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary px-4" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

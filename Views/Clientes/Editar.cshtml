@@ -1,0 +1,62 @@
+﻿@model Proyecto_MVC.Models.Clientes
+
+@{
+    ViewBag.Title = "Editar Cliente";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 700px;">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h2 class="mb-0">Editar Cliente</h2>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                @Html.HiddenFor(model => model.ID_Cliente)
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre completo del cliente" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Direccion, new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", placeholder = "Dirección del cliente" } })
+                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Telefono, new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "Número de teléfono" } })
+                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Email, new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Correo electrónico" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-4">
+                    @Html.LabelFor(model => model.ID_Usuario, new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.ID_Usuario, new { htmlAttributes = new { @class = "form-control", placeholder = "ID del usuario asociado" } })
+                    @Html.ValidationMessageFor(model => model.ID_Usuario, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <input type="submit" value="Guardar Cambios" class="btn btn-success px-4" />
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary px-4" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

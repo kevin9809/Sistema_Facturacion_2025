@@ -1,0 +1,95 @@
+﻿@model Proyecto_MVC.Models.Facturas
+@{
+    ViewBag.Title = "Detalles de la Factura";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Detalles de la Factura #@Model.FacturaID</h2>
+        </div>
+
+        <div class="card-body">
+            <!-- Información del cliente -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5 class="text-secondary">Datos del Cliente</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Cliente:</strong> @Model.NombreCliente
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Dirección:</strong> @Model.DireccionCliente
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Email:</strong> @Model.EmailCliente
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tabla de artículos -->
+            <h4 class="mt-4 mb-3 text-primary">Artículos</h4>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>ID Artículo</th>
+                            <th>Descripción</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.ProductoID</td>
+                                <td>@item.NombreProducto</td>
+                                <td>@item.Precio.ToString("C")</td>
+                                <td>@item.Cantidad</td>
+                                <td>@item.Total.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Totales -->
+            <div class="row mt-4">
+                <div class="col-md-6 offset-md-6">
+                    <div class="card bg-light border-0 shadow-sm">
+                        <div class="card-body">
+                            <p class="mb-2">
+                                <strong>Subtotal:</strong>
+                                <span class="float-end">@Model.SubtotalFactura.ToString("C")</span>
+                            </p>
+                            <p class="mb-2">
+                                <strong>IVA (@ViewBag.IVAPorcentaje%):</strong>
+                                <span class="float-end">@Model.IVAFactura.ToString("C")</span>
+                            </p>
+                            <hr>
+                            <h5 class="fw-bold">
+                                Total a Pagar:
+                                <span class="float-end text-success">@Model.Total.ToString("C")</span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón de regreso -->
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Facturas")" class="btn btn-secondary">
+                    Volver al Listado
+                </a>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
