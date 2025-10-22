@@ -3,84 +3,163 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using Proyecto_MVC.Repositorio;
 
 namespace Proyecto_MVC.Repositorio
 {
     public class FacturaRepository
     {
         private Conexion _conexion = new Conexion();
-
-        public bool GuardarFactura(Facturas factura)
+        private const decimal IVA_RATE = 0.13m;
+        public int GuardarFactura(Facturas factura)
         {
+            SqlTransaction transaction = null;
+            SqlConnection con = null;
+
             try
             {
-                using (SqlConnection con = _conexion.Conectar())
-                {
-                    con.Open();
+                con = _conexion.Conectar();
+                con.Open();
 
-                    // INSERCIÓN EN CABECERA (Facturas)
-                    // La cabecera está correcta, SubtotalFactura es calculado y se omite.
-                    string queryCabecera = @"INSERT INTO Facturas (ClienteID, Fecha, IVAFactura, Total) 
-                                             VALUES (@ClienteID, @Fecha, @IVAFactura, @Total);
+                transaction = con.BeginTransaction();
+
+                // INSERCIÓN EN CABECERA (Facturas)
+                string queryCabecera = @"INSERT INTO Facturas (ClienteID, Fecha, Total) 
+                                             VALUES (@ClienteID, @Fecha, @Total); 
                                              SELECT SCOPE_IDENTITY();";
 
-                    SqlCommand cmdCabecera = new SqlCommand(queryCabecera, con);
-                    cmdCabecera.Parameters.AddWithValue("@ClienteID", factura.ClienteID);
-                    cmdCabecera.Parameters.AddWithValue("@Fecha", factura.Fecha);
-                    cmdCabecera.Parameters.AddWithValue("@IVAFactura", factura.IVAFactura);
-                    cmdCabecera.Parameters.AddWithValue("@Total", factura.Total);
+                SqlCommand cmdCabecera = new SqlCommand(queryCabecera, con, transaction);
+                cmdCabecera.Parameters.AddWithValue("@ClienteID", factura.ClienteID);
+                cmdCabecera.Parameters.AddWithValue("@Fecha", factura.Fecha);
+                cmdCabecera.Parameters.AddWithValue("@Total", factura.Total);
 
-                    // Obtener el nuevo ID de la factura
-                    int idFactura = Convert.ToInt32(cmdCabecera.ExecuteScalar());
+                int idFactura = Convert.ToInt32(cmdCabecera.ExecuteScalar());
 
-                    string queryDetalle = @"INSERT INTO DetalleFactura (FacturaID, ProductoID, PrecioUnitario, Cantidad)
-                                             VALUES (@FacturaID, @ProductoID, @Precio, @Cantidad)";
+                // INSERCIÓN EN DETALLE (DetalleFactura)
+                // Nota: El Subtotal en DetalleFactura es una columna CALCULADA por la DB.
+                string queryDetalle = @"INSERT INTO DetalleFactura (FacturaID, ProductoID, PrecioUnitario, Cantidad)
+                                             VALUES (@FacturaID, @ProductoID, @PrecioUnitario, @Cantidad)";
 
-                    foreach (var item in factura.Items)
+                foreach (var item in factura.Items)
+                {
+                    SqlCommand cmdDetalle = new SqlCommand(queryDetalle, con, transaction);
+                    cmdDetalle.Parameters.AddWithValue("@FacturaID", idFactura); 
+                    cmdDetalle.Parameters.AddWithValue("@ProductoID", item.ProductoID);
+                    cmdDetalle.Parameters.AddWithValue("@PrecioUnitario", item.Precio);
+                    cmdDetalle.Parameters.AddWithValue("@Cantidad", item.Cantidad);
+
+                    cmdDetalle.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+                return idFactura;
+            }
+            catch (Exception ex)
+            {
+                if (transaction != null)
+                {
+                    try
                     {
-                        SqlCommand cmdDetalle = new SqlCommand(queryDetalle, con);
-                        cmdDetalle.Parameters.AddWithValue("@FacturaID", idFactura);
-                        cmdDetalle.Parameters.AddWithValue("@ProductoID", item.ProductoID);
-
-                        // NOTA: @Precio en C# se mapea a PrecioUnitario en la DB.
-                        cmdDetalle.Parameters.AddWithValue("@Precio", item.Precio);
-
-                        cmdDetalle.Parameters.AddWithValue("@Cantidad", item.Cantidad);
-                        // cmdDetalle.Parameters.AddWithValue("@NombreProducto", item.NombreProducto); // ¡ELIMINADO!
-                        // cmdDetalle.Parameters.AddWithValue("@Total", item.Total); // ¡ELIMINADO!
-
-                        cmdDetalle.ExecuteNonQuery();
+                        transaction.Rollback();
+                    }
+                    catch (Exception rbEx)
+                    {
+                        throw new Exception("Error al intentar deshacer la transacción: " + rbEx.Message);
                     }
                 }
-                return true;
-            }
-            catch (SqlException ex)
-            {
-                // Ahora, este error debería resolverse. El error de columna era la causa raíz.
                 throw new Exception("Error al guardar la factura en el repositorio: " + ex.Message);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
             }
         }
 
+        // --------------------------------------------------
+        // MÉTODO: ObtenerTodasLasFacturas (para listado y búsqueda)
+        // Modificado para recalcular Subtotal e IVA para la vista de listado.
+        // --------------------------------------------------
+        public IEnumerable<Facturas> ObtenerTodasLasFacturas(string search = "")
+        {
+            List<Facturas> lista = new List<Facturas>();
 
+            string query = @"
+                SELECT 
+                    F.FacturaID, F.Fecha, F.Total, 
+                    C.Nombre AS NombreCliente 
+                FROM 
+                    Facturas F
+                INNER JOIN 
+                    Clientes C ON F.ClienteID = C.ID_Cliente 
+                WHERE
+                    (@Search IS NULL OR @Search = '' 
+                    OR CAST(F.FacturaID AS VARCHAR) LIKE '%' + @Search + '%' 
+                    OR C.Nombre LIKE '%' + @Search + '%')
+                ORDER BY 
+                    F.FacturaID DESC";
+
+            using (SqlConnection con = _conexion.Conectar())
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                // Parámetro para la búsqueda (maneja nulo o vacío)
+                cmd.Parameters.AddWithValue("@Search", (object)search ?? DBNull.Value);
+
+                try
+                {
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            decimal totalLeido = Convert.ToDecimal(reader["Total"]);
+                            // Subtotal = Total / (1 + IVA_RATE)
+                            decimal subtotalRecalculado = totalLeido / (1 + IVA_RATE);
+                            // IVA = Total - Subtotal
+                            decimal ivaRecalculado = totalLeido - subtotalRecalculado;
+
+
+                            lista.Add(new Facturas
+                            {
+                                FacturaID = Convert.ToInt32(reader["FacturaID"]),
+                                NombreCliente = reader["NombreCliente"].ToString(),
+                                Fecha = Convert.ToDateTime(reader["Fecha"]),
+                                Total = totalLeido, // Usamos el total de la DB
+
+                                // ASIGNAMOS LOS VALORES RECALCULADOS
+                                SubtotalFactura = subtotalRecalculado,
+                                IVAFactura = ivaRecalculado
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener la lista de facturas: " + ex.Message, ex);
+                }
+            }
+            return lista;
+        }
+
+        // --------------------------------------------------
+        // MÉTODO: ObtenerFacturaPorId (Se mantiene el cálculo para el detalle)
+        // --------------------------------------------------
         public Facturas ObtenerFacturaPorId(int id)
         {
             Facturas factura = null;
-
-            // Necesitas una referencia a ClienteRepository para obtener el nombre
-            // Se asume que ClientesRepository está en el mismo namespace o tiene un using.
-            ClientesRepository clienteRepo = new ClientesRepository();
+            // ClientesRepository clienteRepo = new ClientesRepository(); // Esta línea es redundante aquí
 
             try
             {
                 using (SqlConnection con = _conexion.Conectar())
                 {
                     con.Open();
-
                     // 1. Consultar la CABECERA de la Factura y el Cliente
-                    // (Asumo que has añadido 'Telefono' al SELECT y a las propiedades de Facturas.cs)
                     string queryCabecera = @"
-                        SELECT F.*, C.Nombre, C.Direccion, C.Email, C.Telefono 
+                        SELECT F.FacturaID, F.ClienteID, F.Fecha, F.Total, 
+                               C.Nombre, C.Direccion, C.Email, C.Telefono
                         FROM Facturas F
                         INNER JOIN Clientes C ON F.ClienteID = C.ID_Cliente 
                         WHERE F.FacturaID = @FacturaID";
@@ -97,32 +176,28 @@ namespace Proyecto_MVC.Repositorio
                                 FacturaID = Convert.ToInt32(readerCabecera["FacturaID"]),
                                 ClienteID = Convert.ToInt32(readerCabecera["ClienteID"]),
                                 Fecha = Convert.ToDateTime(readerCabecera["Fecha"]),
-                                // NOTA: 'SubtotalFactura' en la DB probablemente es calculado (y debería ser leído)
-                                SubtotalFactura = Convert.ToDecimal(readerCabecera["SubtotalFactura"]),
-                                IVAFactura = Convert.ToDecimal(readerCabecera["IVAFactura"]),
+
+                                // El Total SÍ se lee de la DB
                                 Total = Convert.ToDecimal(readerCabecera["Total"]),
 
-                                // Datos del Cliente (Unidos en la consulta)
                                 NombreCliente = readerCabecera["Nombre"].ToString(),
                                 DireccionCliente = readerCabecera["Direccion"].ToString(),
                                 EmailCliente = readerCabecera["Email"].ToString(),
 
-                                Items = new List<FacturaItem>() // Inicializar la lista de detalles
+                                Items = new List<FacturaItem>()
                             };
                         }
-                    } // Fin readerCabecera
+                    }
 
                     if (factura != null)
                     {
                         // 2. Consultar el DETALLE de la Factura (Items)
-                        // *** CORRECCIÓN: Se agrega JOIN con Productos para obtener NombreProducto ***
-                        // Se corrigen los nombres de columna para coincidir con el esquema
                         string queryDetalle = @"
-                            SELECT DF.ProductoID, P.Nombre as NombreProducto, 
+                            SELECT DF.ProductoID, P.NombreProducto as NombreProducto, 
                                    DF.PrecioUnitario as Precio, DF.Cantidad, 
                                    DF.Subtotal as Total 
                             FROM DetalleFactura DF
-                            INNER JOIN Productos P ON DF.ProductoID = P.ProductoID -- Se asume P.ProductoID es el PK de Productos
+                            INNER JOIN Productos P ON DF.ProductoID = P.ProductoID
                             WHERE DF.FacturaID = @FacturaID";
 
                         SqlCommand cmdDetalle = new SqlCommand(queryDetalle, con);
@@ -135,16 +210,19 @@ namespace Proyecto_MVC.Repositorio
                                 factura.Items.Add(new FacturaItem
                                 {
                                     ProductoID = Convert.ToInt32(readerDetalle["ProductoID"]),
-                                    // Se lee como alias 'NombreProducto'
                                     NombreProducto = readerDetalle["NombreProducto"].ToString(),
-                                    // Se lee como alias 'Precio'
                                     Precio = Convert.ToDecimal(readerDetalle["Precio"]),
                                     Cantidad = Convert.ToInt32(readerDetalle["Cantidad"]),
-                                    // Se lee como alias 'Total'
                                     Total = Convert.ToDecimal(readerDetalle["Total"])
                                 });
                             }
-                        } // Fin readerDetalle
+                        }
+                        decimal subtotalRecalculado = factura.Items.Sum(i => i.Total);
+                        decimal ivaRecalculado = subtotalRecalculado * IVA_RATE;
+
+                        factura.SubtotalFactura = subtotalRecalculado;
+                        factura.IVAFactura = ivaRecalculado;
+
                     }
                 }
             }
