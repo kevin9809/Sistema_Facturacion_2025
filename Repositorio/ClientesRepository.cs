@@ -34,7 +34,7 @@ namespace Proyecto_MVC.Repositorio
                                 Direccion = reader.GetString(2),
                                 Telefono = reader.GetString(3),
                                 Email = reader.GetString(4),
-                                ID_Usuario = reader.GetInt32(5)
+                                //ID_Usuario = reader.GetInt32(5)
                             };
 
                             lista.Add(cliente);

@@ -3,136 +3,146 @@
     ViewBag.Title = "Nueva Factura";
 }
 
-<h2 class="mb-4 text-center">Nueva Factura</h2>
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Error:</strong> @ViewBag.Error
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
-
-<div class="container">
-
-    <!-- 1️⃣ CLIENTE -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-            <p class="h3">1 - Buscar o Seleccionar Cliente</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col mb-4">
+            <div class="h1">Nueva Factura</div>
         </div>
-        <div class="card-body">
-            @using (Html.BeginForm("BuscarCliente", "Facturas", FormMethod.Post))
-            {
-                <div class="form-group">
-                    <label for="nombreCliente">Nombre del Cliente</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="nombreCliente" required />
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+
+
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error:</strong> @ViewBag.Error
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="container">
+
+        <!-- 1️⃣ CLIENTE -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <p class="h3">1 - Buscar o Seleccionar Cliente</p>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("BuscarCliente", "Facturas", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label for="nombreCliente">Nombre del Cliente</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="nombreCliente" required />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
-            <div class="mt-3" style="min-height: 120px;">
-                @if (ViewBag.Cliente != null)
-                {
-                    var cliente = (Proyecto_MVC.Models.Clientes)ViewBag.Cliente;
-                    <div class="alert alert-success">
-                        <h5>@cliente.Nombre</h5>
-                        <p>@cliente.Direccion</p>
-                        <p>@cliente.Email</p>
-                        <p><small>Tel: @cliente.Telefono</small></p>
-                    </div>
-                }
-                else
-                {
-                    <p class="text-muted">Aún no se ha seleccionado un cliente.</p>
-                }
+                <div class="mt-3" style="min-height: 120px;">
+                    @if (ViewBag.Cliente != null)
+                    {
+                        var cliente = (Proyecto_MVC.Models.Clientes)ViewBag.Cliente;
+                        <div class="alert alert-success">
+                            <h5>@cliente.Nombre</h5>
+                            <p>@cliente.Direccion</p>
+                            <p>@cliente.Email</p>
+                            <p><small>Tel: @cliente.Telefono</small></p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Aún no se ha seleccionado un cliente.</p>
+                    }
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 2️⃣ ARTÍCULOS -->
-    <div class="card mb-4">
-        <div class="card-header bg-success text-white">
-            <p class="h3">2 - Agregar Articulos</p>
-        </div>
-        <div class="card-body">
-            @using (Html.BeginForm("AgregarArticulo", "Facturas", FormMethod.Post))
-            {
-                <div class="form-row">
-                    <div class="col-md-6 mb-2">
-                        <label>Artículo</label>
-                        <input type="text" name="articulo" class="form-control" required />
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <label>Cantidad</label>
-                        <input type="number" name="cantidad" class="form-control" value="1" min="1" required />
-                    </div>
-                    <div class="col-md-3 mb-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-success w-100">Agregar</button>
-                    </div>
-                </div>
-            }
-
-            <table class="table table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Items)
-                    {
-                        <tr>
-                            <td>@item.ProductoID</td>
-                            <td>@item.NombreProducto</td>
-                            <td>@item.Precio.ToString("C")</td>
-                            <td>@item.Cantidad</td>
-                            <td>@item.Total.ToString("C")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 3️⃣ TOTALES -->
-    <div class="card mb-5">
-        <div class="card-header bg-secondary text-white">
-            <p class="h3">3 - Totales</p>
-        </div>
-        <div class="card-body text-right">
-            <p>Subtotal: <strong>@Model.SubtotalFactura.ToString("C")</strong></p>
-            <p>IVA (13%): <strong>@Model.IVAFactura.ToString("C")</strong></p>
-            <h4>Total: <strong>@Model.Total.ToString("C")</strong></h4>
-
-            @using (Html.BeginForm("Guardar", "Facturas", FormMethod.Post))
-            {
-                if (ViewBag.Cliente != null)
+        <!-- 2️⃣ ARTÍCULOS -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <p class="h3">2 - Agregar Articulos</p>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AgregarArticulo", "Facturas", FormMethod.Post))
                 {
-                    var cliente = (Proyecto_MVC.Models.Clientes)ViewBag.Cliente;
-                    <input type="hidden" name="ClienteID" value="@cliente.ID_Cliente" />
+                    <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                            <label>Artículo</label>
+                            <input type="text" name="articulo" class="form-control" required />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label>Cantidad</label>
+                            <input type="number" name="cantidad" class="form-control" value="1" min="1" required />
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-success w-100">Agregar</button>
+                        </div>
+                    </div>
                 }
 
-                <input type="hidden" name="SubtotalFactura" value="@Model.SubtotalFactura" />
-                <input type="hidden" name="IVAFactura" value="@Model.IVAFactura" />
-                <input type="hidden" name="Total" value="@Model.Total" />
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.ProductoID</td>
+                                <td>@item.NombreProducto</td>
+                                <td>@item.Precio.ToString("C")</td>
+                                <td>@item.Cantidad</td>
+                                <td>@item.Total.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                <button type="submit" class="btn btn-primary btn-lg mt-3"
-                        @(ViewBag.Cliente == null || Model.Items.Count == 0 ? "disabled" : "")>
-                    Guardar Factura
-                </button>
+        <!-- 3️⃣ TOTALES -->
+        <div class="card mb-5">
+            <div class="card-header bg-secondary text-white">
+                <p class="h3">3 - Totales</p>
+            </div>
+            <div class="card-body text-right">
+                <p>Subtotal: <strong>@Model.SubtotalFactura.ToString("C")</strong></p>
+                <p>IVA (13%): <strong>@Model.IVAFactura.ToString("C")</strong></p>
+                <h4>Total: <strong>@Model.Total.ToString("C")</strong></h4>
+
+                @using (Html.BeginForm("Guardar", "Facturas", FormMethod.Post))
+                {
+                    if (ViewBag.Cliente != null)
+                    {
+                        var cliente = (Proyecto_MVC.Models.Clientes)ViewBag.Cliente;
+                        <input type="hidden" name="ClienteID" value="@cliente.ID_Cliente" />
+                    }
+
+                    <input type="hidden" name="SubtotalFactura" value="@Model.SubtotalFactura" />
+                    <input type="hidden" name="IVAFactura" value="@Model.IVAFactura" />
+                    <input type="hidden" name="Total" value="@Model.Total" />
+
+                    <button type="submit" class="btn btn-primary btn-lg mt-3"
+                            @(ViewBag.Cliente == null || Model.Items.Count == 0 ? "disabled" : "")>
+                        Guardar Factura
+                    </button>
 
 
-                @Html.ActionLink("Volver", "Index", "Facturas", null, new { @class = "btn btn-outline-secondary btn-lg mt-3" })
-            }
+                    @Html.ActionLink("Volver", "Index", "Facturas", null, new { @class = "btn btn-outline-secondary btn-lg mt-3" })
+                }
+            </div>
         </div>
     </div>
 </div>
