@@ -47,8 +47,27 @@
                         </a>
                     </li>
 
+                    @if (Session["Usuario"] != null)
+                    {
+                        <li class="nav-item ms-auto">
+                            <span class="navbar-link">
+                                👋 Hola, @Session["Usuario"] (@Session["Rol"])
+                            </span>
+                        </li>
+                        <li class="nav-item ms-auto">
+                            <a class="nav-link" href="@Url.Action("Logout", "Account")">Cerrar sesión</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Account")">Iniciar sesión</a>
+                        </li>
+                    }
+
+
                     @*<li>@Html.ActionLink("Inventario", "Index", "Inventario", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Facturas", "Index", "Facturas", new { area = "" }, new { @class = "nav-link" })</li>*@
+        <li>@Html.ActionLink("Facturas", "Index", "Facturas", new { area = "" }, new { @class = "nav-link" })</li>*@
                 </ul>
             </div>
         </div>
