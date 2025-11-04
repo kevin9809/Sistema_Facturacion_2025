@@ -5,7 +5,7 @@
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 700px;">
+    <div class="card shadow-lg rounded-4 mx-auto" style="max-width: 700px">
         <div class="card-header bg-primary text-white text-center rounded-top-4">
             <h2 class="mb-0">Editar Cliente</h2>
         </div>
@@ -48,9 +48,9 @@
                     @Html.ValidationMessageFor(model => model.ID_Usuario, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="d-flex justify-content-center gap-3">
-                    <input type="submit" value="Guardar Cambios" class="btn btn-success px-4" />
-                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary px-4" })
+                <div class="form-group text-center">
+                    <input type="submit" value="Guardar" class="btn btn-success me-2" />
+                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
                 </div>
             }
         </div>

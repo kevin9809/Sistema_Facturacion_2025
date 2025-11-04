@@ -63,9 +63,9 @@ namespace Proyecto_MVC.Repositorio
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Nombre", cliente.Nombre);
-                        cmd.Parameters.AddWithValue("@Direccion", cliente.Direccion);
-                        cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
-                        cmd.Parameters.AddWithValue("@Email", cliente.Email);
+                        cmd.Parameters.AddWithValue("@Direccion", cliente?.Direccion);
+                        cmd.Parameters.AddWithValue("@Telefono", cliente?.Telefono);
+                        cmd.Parameters.AddWithValue("@Email", cliente?.Email);
                         cmd.Parameters.AddWithValue("@ID_Usuario", cliente.ID_Usuario);
 
                         cmd.ExecuteNonQuery();

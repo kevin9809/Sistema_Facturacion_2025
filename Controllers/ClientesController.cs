@@ -14,9 +14,20 @@ namespace Proyecto_MVC.Controllers
     {
         ClientesRepository clientes = new ClientesRepository();
         // GET: Clientes
-        public ActionResult Index()
+        public ActionResult Index(string busqueda)
         {
             var listaClientes = clientes.CargarClientes();
+
+            // Buscar clientes si hay texto
+            if(!string.IsNullOrEmpty(busqueda))
+            {
+                var resultados = listaClientes.Where(c =>
+                c.Nombre.Contains(busqueda) ||
+                c.Email.Contains(busqueda) ||
+                c.Telefono.Contains(busqueda));
+                return View(resultados);
+            }
+
             return View(listaClientes);
         }
 
