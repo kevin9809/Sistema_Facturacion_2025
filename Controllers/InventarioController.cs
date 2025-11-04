@@ -12,9 +12,17 @@ namespace Proyecto_MVC.Controllers
     {
         InventarioRepository productos = new InventarioRepository();
         // GET: Inventario
-        public ActionResult Index()
+        public ActionResult Index(string busqueda)
         {
             var listaProductos = productos.CargarProductos();
+
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                var resultados = listaProductos.Where(p =>
+                p.NombreProducto.Contains(busqueda) || 
+                p.Descripcion.Contains(busqueda));
+                return View(resultados);
+            }
             return View(listaProductos);
         }
 
