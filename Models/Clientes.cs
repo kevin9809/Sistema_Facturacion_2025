@@ -9,6 +9,7 @@ namespace Proyecto_MVC.Models
 {
     public class Clientes
     {
+        [Key]
         public int ID_Cliente { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         [StringLength(100, ErrorMessage = "El nombre no debe exceder los 100 caracteres.")]

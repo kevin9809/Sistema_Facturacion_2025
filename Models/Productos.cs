@@ -8,6 +8,7 @@ namespace Proyecto_MVC.Models
 {
     public class Productos
     {
+        [Key]
         public int ProductoID { get; set; }
         [Required(ErrorMessage = "El nombre del producto es obligatorio.")]
         [StringLength(100, ErrorMessage = "El nombre no debe exceder los 100 caracteres.")]

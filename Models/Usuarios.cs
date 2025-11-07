@@ -8,6 +8,7 @@ namespace Proyecto_MVC.Models
 {
     public class Usuarios
     {
+        [Key]
         public int ID_Usuario { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public string Nombre { get; set; }

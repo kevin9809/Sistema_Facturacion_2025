@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Proyecto_MVC.Models.DetalleFacturaViewModel>
+
+<div class="container my-5">
+    <!-- Encabezado de la factura -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Factura</h2>
+        <p class="text-muted">Detalles de la venta</p>
+        <hr class="w-25 mx-auto border-primary">
+    </div>
+
+    <!-- Información del cliente -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Información del Cliente</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <p><strong>Número de factura:</strong> @ViewBag.Id</p>
+                    <p><strong>Fecha:</strong> @ViewBag.Fecha</p>
+                    <p><strong>Cliente:</strong> @ViewBag.DatosCliente.Nombre</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Dirección:</strong> @ViewBag.DatosCliente.Direccion</p>
+                    <p><strong>Teléfono:</strong> @ViewBag.DatosCliente.Telefono</p>
+                    <p><strong>Email:</strong> @ViewBag.DatosCliente.Email</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detalle de productos -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Detalle de la Factura</h5>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-center">Cantidad</th>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th class="text-end">Precio Unitario</th>
+                        <th class="text-end">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.Cantidad</td>
+                            <td>@item.NombreProducto</td>
+                            <td>@item.DescripcionProducto</td>
+                            <td class="text-end">$@item.PrecioUnitario.ToString("N2")</td>
+                            <td class="text-end">$@item.Subtotal.ToString("N2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Total -->
+    <div class="d-flex justify-content-end mt-4">
+        <div class="border-top pt-3 text-end" style="min-width: 250px;">
+            <h4 class="fw-bold">Total:</h4>
+            <h3 class="text-primary fw-bold">$@ViewBag.Total.ToString("N2")</h3>
+        </div>
+    </div>
+
+    <!-- Pie -->
+    <div class="text-center text-muted mt-5 small">
+        <hr />
+        <p>Proyecto MVC — Facturación</p>
+    </div>
+</div>
