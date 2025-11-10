@@ -1,0 +1,156 @@
+﻿@model Proyecto_MVC.Models.FacturaDetalleViewModel
+
+@{
+    ViewBag.Title = "Crear Factura";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">Nueva Factura</h2>
+
+    @using (Html.BeginForm("Crear", "Facturas", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label>Fecha</label>
+                        @Html.TextBoxFor(m => m.Fecha, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Cliente</label>
+                        @Html.DropDownListFor(m => m.ClienteID, Model.Clientes, "-- Seleccione --", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Total</label>
+                        <input type="text" id="Total" name="Total" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4>Detalles de productos</h4>
+        <table class="table table-bordered" id="tablaDetalles">
+            <thead class="table-primary">
+                <tr>
+                    <th>Producto ID</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas dinámicas -->
+
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-success" id="btnAgregar">
+            Agregar producto
+        </button>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Guardar Factura</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+    document.getElementById("btnAgregar").addEventListener("click", function () {
+    let tbody = document.querySelector("#tablaDetalles tbody");
+    let index = tbody.querySelectorAll("tr").length;
+
+    let fila = document.createElement("tr");
+    fila.innerHTML = `
+        <td>
+            <select name="Detalles[${index}].ProductoID" class="form-control producto">
+                <option value="">-- Seleccione --</option>
+                @foreach (var p in Model.Productos)
+                {
+                    <option value="@p.ProductoID" data-precio="@p.Precio">@p.NombreProducto</option>
+                }
+            </select>
+        </td>
+        <td><input name="Detalles[${index}].Cantidad" type="number" min="1" class="form-control cantidad" /></td>
+        <td><input name="Detalles[${index}].PrecioUnitario" type="number" value="" step="0.01" class="form-control precio" /></td>
+        <td><input class="form-control subtotal" readonly /></td>
+        <td><button type="button" class="btn btn-danger btn-sm eliminar">X</button></td>
+    `;
+    tbody.appendChild(fila);
+});
+
+
+        function actualizarIndices() {
+            const filas = document.querySelectorAll("#tablaDetalles tbody tr");
+            filas.forEach((fila, i) => {
+                fila.querySelectorAll("input, select").forEach(campo => {
+                    campo.name = campo.name.replace(/\[\d+\]/, `[${i}]`);
+                });
+            });
+        }
+
+
+    document.addEventListener("input", e => {
+        if (e.target.classList.contains("cantidad") || e.target.classList.contains("precio")) {
+            const fila = e.target.closest("tr");
+            const cantidad = parseFloat(fila.querySelector(".cantidad").value) || 0;
+            const precio = parseFloat(fila.querySelector(".precio").value) || 0;
+            const subtotal = cantidad * precio;
+            fila.querySelector(".subtotal").value = subtotal.toFixed(2);
+            calcularTotal();
+        }
+    });
+
+    document.addEventListener("click", e => {
+        if (e.target.classList.contains("eliminar")) {
+            e.target.closest("tr").remove();
+            actualizarIndices();
+        }
+    });
+
+    function calcularTotal() {
+        let total = 0;
+        document.querySelectorAll(".subtotal").forEach(x => {
+            total += parseFloat(x.value) || 0;
+        });
+        document.getElementById("Total").value = total.toFixed(2);
+    }
+
+        document.addEventListener("change", function (e) {
+            if (e.target && e.target.classList.contains("producto")) {
+                let select = e.target; // el <select> que cambió
+                let fila = select.closest("tr"); // la fila completa
+
+                // obtiene el precio del atributo data-precio del producto seleccionado
+                let precio = select.options[select.selectedIndex].getAttribute("data-precio");
+
+                // busca los inputs dentro de esa fila
+                let precioInput = fila.querySelector(".precio");
+                let cantidadInput = fila.querySelector(".cantidad");
+                let subtotalInput = fila.querySelector(".subtotal");
+
+                // asigna el precio unitario
+                precioInput.value = precio ? parseFloat(precio).toFixed(2) : "";
+
+                // recalcula el subtotal si hay cantidad
+                let cantidad = parseFloat(cantidadInput.value) || 0;
+                subtotalInput.value = (cantidad * parseFloat(precio || 0)).toFixed(2);
+            }
+        });
+
+        // Si el usuario cambia la cantidad, recalculamos el subtotal
+        document.addEventListener("input", function (e) {
+            if (e.target && e.target.classList.contains("cantidad")) {
+                let fila = e.target.closest("tr");
+                let precio = parseFloat(fila.querySelector(".precio").value) || 0;
+                let cantidad = parseFloat(e.target.value) || 0;
+                fila.querySelector(".subtotal").value = (precio * cantidad).toFixed(2);
+            }
+        });
+
+    </script>
+}

@@ -10,7 +10,7 @@ namespace Proyecto_MVC.Controllers
 {
     public class AccountController : Controller
     {
-        UsuariosRepository usuarios = new UsuariosRepository();
+        private readonly AppDbContext db = new AppDbContext();
 
         // GET: Login
         public ActionResult Login()
@@ -25,7 +25,7 @@ namespace Proyecto_MVC.Controllers
             if (ModelState.IsValid)
             {
                 // Busca al usuario
-                var usuario = usuarios.CargarUsuarios()
+                var usuario = db.Usuarios
                     .FirstOrDefault(u => 
                     u.Nombre == model.Nombre && 
                     u.Contraseña == model.Contraseña);
@@ -35,6 +35,7 @@ namespace Proyecto_MVC.Controllers
                     // Guarda en sesión
                     Session["Usuario"] = usuario.Nombre;
                     Session["Rol"] = usuario.Rol;
+                    Session["Id"] = usuario.ID_Usuario;
 
                     // Redirige al Home o al área según el rol
                     return RedirectToAction("Index", "Home");
