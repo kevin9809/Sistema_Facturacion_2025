@@ -25,40 +25,36 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1 h4">
-                    @*<li>@Html.ActionLink("Clientes", "Index", "Clientes", new { area = "" }, new { @class = "nav-link" })</li>*@
 
+
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 h4">
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Clientes")">
                             <i class="bi bi-people"></i> Clientes
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Inventario")">
                             <i class="bi bi-file-text"></i> Inventario
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Facturas")">
                             <i class="bi bi-receipt-cutoff"></i> Facturas
                         </a>
                     </li>
+                </ul>
 
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     @if (Session["Usuario"] != null)
                     {
-                          <li class="nav-item ms-auto">
-                               <p class="nav-link">Hola,</p>
-                          </li> 
-                          <li class="nav-item dropdown">
-                        
-                            @*👋 Hola,*@
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                                @Session["Usuario"]
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-fill"></i>@Session["Usuario"]
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")">Cerrar sesión</a></li>
                             </ul>
                         </li>
@@ -66,15 +62,14 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Login", "Account")">Iniciar sesión</a>
+                            <a class="nav-link" href="@Url.Action("Login", "Account")">
+                                <i class="bi bi-person-fill"></i>Iniciar sesión
+                            </a>
                         </li>
                     }
-
-
-                    @*<li>@Html.ActionLink("Inventario", "Index", "Inventario", new { area = "" }, new { @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Facturas", "Index", "Facturas", new { area = "" }, new { @class = "nav-link" })</li>*@
                 </ul>
             </div>
+
         </div>
     </nav>
     <div class="container body-content">
