@@ -49,13 +49,18 @@
 
                     @if (Session["Usuario"] != null)
                     {
-                        <li class="nav-item ms-auto">
-                            <span class="navbar-link">
-                                👋 Hola, @Session["Usuario"] (@Session["Rol"])
-                            </span>
-                        </li>
-                        <li class="nav-item ms-auto">
-                            <a class="nav-link" href="@Url.Action("Logout", "Account")">Cerrar sesión</a>
+                          <li class="nav-item ms-auto">
+                               <p class="nav-link">Hola,</p>
+                          </li> 
+                          <li class="nav-item dropdown">
+                        
+                            @*👋 Hola,*@
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                @Session["Usuario"]
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")">Cerrar sesión</a></li>
+                            </ul>
                         </li>
                     }
                     else
