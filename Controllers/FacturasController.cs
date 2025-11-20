@@ -9,186 +9,169 @@ namespace Proyecto_MVC.Controllers
 {
     public class FacturasController : Controller
     {
-        private readonly FacturaRepository _facturaRepo = new FacturaRepository();
-        private readonly ClientesRepository _clienteRepo = new ClientesRepository();
-        private readonly InventarioRepository _productoRepo = new InventarioRepository();
-        private const decimal IVA_RATE = 0.13m; // Se usa en CalcularFactura
-
-
-        public ActionResult Index(string search)
+        private readonly AppDbContext db = new AppDbContext();
+        public ActionResult Index(string buscar)
         {
-            IEnumerable<Facturas> facturas = new List<Facturas>();
-            try
-            {
-                // Llama al repositorio para obtener todas las facturas (o las filtradas)
-                facturas = _facturaRepo.ObtenerTodasLasFacturas(search);
+            var lista = (from f in db.Facturas
+                         join c in db.Clientes on f.ClienteID equals c.ID_Cliente
+                         select new ListaFacturasViewModel
+                         {
+                             FacturaID = f.FacturaID,
+                             Fecha = f.Fecha,
+                             NombreCliente = c.Nombre,
+                             Total = f.Total
+                         });
 
-                // Pasa el término de búsqueda a la vista para que el campo de texto mantenga el valor
-                ViewBag.SearchTerm = search;
-            }
-            catch (Exception ex)
+            if (!string.IsNullOrEmpty(buscar))
             {
-                // Si hay un error de conexión o en la query, se muestra en la vista
-                ViewBag.Error = "Error al cargar el listado de facturas: " + ex.Message;
+                lista = lista.Where(x =>
+                    x.NombreCliente.Contains(buscar) ||
+                    x.FacturaID.ToString().Contains(buscar));
             }
-            // Retorna la vista, pasando la lista de facturas (puede ser vacía)
-            return View(facturas);
+
+            return View(lista.ToList());
         }
 
-        // GET: Facturas/NuevaFactura
-        public ActionResult NuevaFactura()
+        public ActionResult Detalles(int id)
         {
-            // Limpiar la sesión e inicializar
-            Session["FacturaItems"] = new List<FacturaItem>();
-            Session["ClienteObj"] = null; // Limpiamos el cliente de la sesión
-            ViewBag.Cliente = null;
-            return View(CalcularFactura()); // Retornar Facturas con Items vacíos
-        }
+            var lista = (from d in db.DetalleFactura
+                         join p in db.Productos on d.ProductoID equals p.ProductoID
+                         where d.FacturaID == id
+                         select new DetalleFacturaViewModel
+                         {
+                             Cantidad = d.Cantidad,
+                             NombreProducto = p.NombreProducto,
+                             DescripcionProducto = p.Descripcion,
+                             PrecioUnitario = d.PrecioUnitario,
+                             Subtotal = d.Subtotal
+                         }).ToList();
 
-        // POST: Facturas/BuscarCliente
-        [HttpPost]
-        public ActionResult BuscarCliente(string nombreCliente)
-        {
-            var cliente = _clienteRepo.ObtenerClientePorNombre(nombreCliente);
-
-            if (cliente != null)
-            {
-                // CORRECCIÓN CRÍTICA: Guardar el objeto cliente completo en Session
-                Session["ClienteObj"] = cliente;
-                ViewBag.Cliente = cliente;
-            }
-            else
-            {
-                ViewBag.Error = "Cliente no encontrado.";
-            }
-
-            // Recuperar el cliente de la sesión para la vista (si existe)
-            if (Session["ClienteObj"] != null)
-            {
-                ViewBag.Cliente = (Proyecto_MVC.Models.Clientes)Session["ClienteObj"];
-            }
-
-            // Recargar la vista con los datos actuales
-            return View("NuevaFactura", CalcularFactura());
-        }
-
-        // POST: Facturas/AgregarArticulo
-        [HttpPost]
-        public ActionResult AgregarArticulo(string articulo, int cantidad)
-        {
-            var items = (List<FacturaItem>)Session["FacturaItems"];
-
-            // Buscar el producto por ID o Nombre (usando tu ProductoRepository)
-            var productoEncontrado = _productoRepo.ObtenerProductoPorNomOId(articulo);
-
-            if (productoEncontrado != null && cantidad > 0)
-            {
-                var nuevoItem = new FacturaItem
-                {
-                    ProductoID = productoEncontrado.ProductoID,
-                    NombreProducto = productoEncontrado.NombreProducto,
-                    Precio = productoEncontrado.Precio,
-                    Cantidad = cantidad,
-                    Total = productoEncontrado.Precio * cantidad
-                };
-                items.Add(nuevoItem);
-                Session["FacturaItems"] = items;
-            }
-            else
-            {
-                ViewBag.Error = "Artículo no encontrado o cantidad inválida.";
-            }
-
-
-            if (Session["ClienteObj"] != null)
-            {
-                ViewBag.Cliente = (Proyecto_MVC.Models.Clientes)Session["ClienteObj"];
-            }
-
-            // Recalcular y retornar la vista
-            return View("NuevaFactura", CalcularFactura());
-        }
-
-        // POST: Facturas/Guardar
-        [HttpPost]
-        public ActionResult Guardar(FormCollection form)
-        {
-            int nuevoId = 0; // Inicializamos el ID en 0
-
-            try
-            {
-                var factura = CalcularFactura(); // Obtiene la factura completa con totales
-
-                // Obtener ClienteID desde el objeto Cliente en la sesión
-                var cliente = (Proyecto_MVC.Models.Clientes)Session["ClienteObj"];
-
-                if (cliente == null)
-                {
-                    ViewBag.Error = "Debe buscar y seleccionar un cliente antes de guardar la factura.";
-                    return View("NuevaFactura", CalcularFactura());
-                }
-
-                factura.ClienteID = cliente.ID_Cliente; // Asigna el ID del cliente
-
-                // El repositorio devuelve el ID de la factura (int).
-                nuevoId = _facturaRepo.GuardarFactura(factura);
-
-                if (nuevoId > 0)
-                {
-                    // Usar el ID de la factura en el mensaje de éxito
-                    TempData["MensajeExito"] = $"¡Factura número {nuevoId} guardada correctamente! Puedes buscarla en el listado.";
-
-                    Session["FacturaItems"] = null; // Limpiar sesión
-                    Session["ClienteObj"] = null;
-                    return RedirectToAction("Index"); // Redirigir a la lista de facturas
-                }
-
-                // Si el repositorio devuelve 0, hubo un problema no controlado por la excepción.
-                ViewBag.Error = "Error al guardar la factura en la base de datos (ID no generado).";
-            }
-            catch (Exception ex)
-            {
-                // Si el repositorio lanza una excepción, la atrapamos aquí.
-                ViewBag.Error = "Error al guardar la factura: " + ex.Message;
-            }
-
-            // Si hubo un error, recargamos la vista de NuevaFactura con los datos y el error
-            if (Session["ClienteObj"] != null)
-            {
-                ViewBag.Cliente = (Proyecto_MVC.Models.Clientes)Session["ClienteObj"];
-            }
-            return View("NuevaFactura", CalcularFactura());
-        }
-
-        // GET: Facturas/Ver/13
-        public ActionResult Ver(int id)
-        {
-            var factura = _facturaRepo.ObtenerFacturaPorId(id);
+            // Obtener la factura
+            var factura = db.Facturas.FirstOrDefault(f => f.FacturaID == id);
 
             if (factura == null)
             {
-                ViewBag.Error = "Factura no encontrada.";
-                return View("Index");
+                return HttpNotFound("No se encontró la factura especificada.");
             }
-            return View(factura); // Views/Facturas/Ver.cshtml
-        }
 
-        // Método de Lógica Común para calcular totales
-        private Facturas CalcularFactura()
-        {
-            var items = (List<FacturaItem>)Session["FacturaItems"] ?? new List<FacturaItem>();
+            // Obtener el cliente relacionado
+            var cliente = db.Clientes.FirstOrDefault(c => c.ID_Cliente == factura.ClienteID);
 
-            var subtotal = items.Sum(i => i.Total);
-            var iva = subtotal * IVA_RATE;
-            var total = subtotal + iva;
+            ViewBag.DatosCliente = cliente;
+            ViewBag.Id = id;
+            ViewBag.Fecha = factura.Fecha.ToShortDateString();
+            ViewBag.Total = factura.Total;
 
-            return new Facturas
+            if (!lista.Any())
             {
-                SubtotalFactura = subtotal,
-                IVAFactura = iva,
-                Total = total,
-                Items = items
-            };
+                return HttpNotFound("No se encontraron detalles para esta factura.");
+            }
+
+            return View(lista);
         }
+
+        public ActionResult Crear()
+        {
+            var modelo = new FacturaDetalleViewModel
+            {
+                Fecha = DateTime.Now,
+                Clientes = db.Clientes
+                             .Select(c => new SelectListItem
+                             {
+                                 Value = c.ID_Cliente.ToString(),
+                                 Text = c.Nombre
+                             })
+                             .ToList(),
+                Productos = db.Productos.ToList(),
+                Detalles = new List<DetalleFacturaViewModel>()
+            };
+
+            return View(modelo);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Crear(FacturaDetalleViewModel modelo)
+        {
+            if (ModelState.IsValid)
+            {
+                var factura = new Facturas
+                {
+                    Fecha = modelo.Fecha,
+                    ClienteID = modelo.ClienteID,
+                    Total = modelo.Total
+                };
+
+                db.Facturas.Add(factura);
+                db.SaveChanges();
+
+                // Guardar detalles
+                foreach (var item in modelo.Detalles)
+                {
+                    var detalle = new DetalleFactura
+                    {
+                        FacturaID = factura.FacturaID,
+                        ProductoID = item.ProductoID,
+                        Cantidad = item.Cantidad,
+                        PrecioUnitario = item.PrecioUnitario
+                    };
+                    db.DetalleFactura.Add(detalle);
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            // Si algo falla, recarga la lista de clientes
+            modelo.Clientes = db.Clientes
+                                .Select(c => new SelectListItem
+                                {
+                                    Value = c.ID_Cliente.ToString(),
+                                    Text = c.Nombre
+                                }).ToList();
+
+            return View(modelo);
+        }
+
+        // GET: Facturas/Eliminar
+        public ActionResult Eliminar(int id)
+        {
+            var factura = db.Facturas.Find(id);
+            if (factura == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Puedes incluir datos del cliente si los tienes relacionados
+            var cliente = db.Clientes.FirstOrDefault(c => c.ID_Cliente == factura.ClienteID);
+
+            ViewBag.Cliente = cliente;
+            return View(factura);
+        }
+
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EliminarConfirmado(int id)
+        {
+            try
+            {
+                var factura = db.Facturas.Find(id);
+                if (factura == null)
+                    return HttpNotFound();
+
+                var detalles = db.DetalleFactura.Where(d => d.FacturaID == id).ToList();
+                db.DetalleFactura.RemoveRange(detalles);
+                db.Facturas.Remove(factura);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Error al eliminar la factura: " + ex.Message;
+                return View("Error");
+            }
+        }
+
     }
 }
