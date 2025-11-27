@@ -12,9 +12,11 @@
         </div>
     </div>
 
+    <a href="@Url.Action("VerReporte", "Facturas")" target="_blank">Abrir Reporte</a>
+
     <form method="get" action="@Url.Action("Index", "Facturas")" class="mb-3 d-flex">
-        <input type="text" name="buscar" class="form-control me-2" 
-               placeholder="Buscar por nombre de cliente o número de factura..." 
+        <input type="text" name="buscar" class="form-control me-2"
+               placeholder="Buscar por nombre de cliente o número de factura..."
                value="@Request.QueryString["buscar"]" />
         <button type="submit" class="btn btn-outline-primary">Buscar</button>
     </form>

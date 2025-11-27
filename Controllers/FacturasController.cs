@@ -173,5 +173,9 @@ namespace Proyecto_MVC.Controllers
             }
         }
 
+        public ActionResult VerReporte()
+        {
+            return Redirect(Url.Content("~/Reporte/ReporteViewer.aspx"));
+        }
     }
 }
