@@ -18,12 +18,23 @@ namespace Proyecto_MVC.Views.Reporte
         {
             if (!IsPostBack)
             {
-                ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                DateTime ini = DateTime.Parse(Request.QueryString["ini"]);
+                DateTime fin = DateTime.Parse(Request.QueryString["fin"]);
+
+                var datos = db.Clientes.ToList();
+                    //.Where(c => c.Fecha >= ini && c.Fecha <= fin)
+                    //.ToList();
+
                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Reporte/Report.rdlc");
 
                 ReportViewer1.LocalReport.DataSources.Clear();
-                ReportDataSource rds = new ReportDataSource("DataSet1", db.Clientes.ToList());
+                ReportDataSource rds = new ReportDataSource("DataSet1", datos);
                 ReportViewer1.LocalReport.DataSources.Add(rds);
+
+                ReportParameter p = new ReportParameter("inicio", ini.ToShortDateString());
+                ReportParameter p2 = new ReportParameter("fin", fin.ToShortDateString());
+                ReportViewer1.LocalReport.SetParameters(new[] { p });
+                ReportViewer1.LocalReport.SetParameters(new[] { p2 });
 
                 ReportViewer1.LocalReport.Refresh();
             }

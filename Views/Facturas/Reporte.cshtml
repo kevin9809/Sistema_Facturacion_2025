@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Generar Reporte";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Generar reporte por rango de fechas</h2>
+
+    <form method="get" action="@Url.Action("VerReporte", "Facturas")" class="card p-4 shadow">
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Fecha inicial</label>
+                <input type="date" name="fechaInicio" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label>Fecha final</label>
+                <input type="date" name="fechaFin" class="form-control" required />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Generar Reporte
+        </button>
+
+    </form>
+
+</div>

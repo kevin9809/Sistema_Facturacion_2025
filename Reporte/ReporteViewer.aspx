@@ -11,6 +11,10 @@
     <title></title>
 </head>
 <body>
+    <a href="/Facturas/Reporte" class="btn btn-primary" 
+   style="margin-bottom: 15px; display:inline-block;">
+    ← Volver a Reporte Facturas
+</a>
     <form id="form1" runat="server">
         <div>
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>

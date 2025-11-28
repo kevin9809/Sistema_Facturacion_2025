@@ -14,6 +14,7 @@ namespace Proyecto_MVC.Controllers
         {
             var lista = (from f in db.Facturas
                          join c in db.Clientes on f.ClienteID equals c.ID_Cliente
+                         join d in db.DetalleFactura on f.FacturaID equals d.FacturaID
                          select new ListaFacturasViewModel
                          {
                              FacturaID = f.FacturaID,
@@ -173,9 +174,15 @@ namespace Proyecto_MVC.Controllers
             }
         }
 
-        public ActionResult VerReporte()
+        public ActionResult VerReporte(DateTime fechaInicio, DateTime fechaFin)
         {
-            return Redirect(Url.Content("~/Reporte/ReporteViewer.aspx"));
+            string url = Url.Content($"~/Reporte/ReporteViewer.aspx?ini={fechaInicio:yyyy-MM-dd}&fin={fechaFin:yyyy-MM-dd}");
+            return Redirect(url);
+        }
+
+        public ActionResult Reporte()
+        {
+            return View();
         }
     }
 }
