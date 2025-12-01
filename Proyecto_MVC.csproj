@@ -151,6 +151,7 @@
     <Compile Include="Models\DetalleFacturaViewModel.cs" />
     <Compile Include="Models\FacturaDetalleViewModel.cs" />
     <Compile Include="Models\Facturas.cs" />
+    <Compile Include="Models\FacturasReport.cs" />
     <Compile Include="Models\ListaFacturasViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Productos.cs" />
