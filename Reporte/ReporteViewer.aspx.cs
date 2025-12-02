@@ -46,9 +46,12 @@ namespace Proyecto_MVC.Views.Reporte
                 ReportParameter p = new ReportParameter("inicio", ini.ToShortDateString());
                 ReportParameter p2 = new ReportParameter("fin", fin.ToShortDateString());
                 ReportParameter p3 = new ReportParameter("total", lista.Sum(t => t.Subtotal).ToString());
+                ReportParameter p4 = new ReportParameter("usuario", $"Reporte generado por {Session["Usuario"]} {DateTime.Now.ToString()}");
+
                 ReportViewer1.LocalReport.SetParameters(new[] { p });
                 ReportViewer1.LocalReport.SetParameters(new[] { p2 });
                 ReportViewer1.LocalReport.SetParameters(new[] { p3 });
+                ReportViewer1.LocalReport.SetParameters(new[] { p4 });
 
                 ReportViewer1.LocalReport.Refresh();
             }

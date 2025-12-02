@@ -16,6 +16,9 @@ namespace Proyecto_MVC.Controllers
         // GET: Clientes
         public ActionResult Index(string busqueda)
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Account");
+
             var listaClientes = clientes.CargarClientes();
 
             // Buscar clientes si hay texto

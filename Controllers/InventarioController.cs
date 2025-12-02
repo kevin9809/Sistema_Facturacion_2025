@@ -14,6 +14,9 @@ namespace Proyecto_MVC.Controllers
         // GET: Inventario
         public ActionResult Index(string busqueda)
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Account");
+
             var listaProductos = productos.CargarProductos();
 
             if (!string.IsNullOrEmpty(busqueda))

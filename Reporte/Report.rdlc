@@ -503,7 +503,7 @@
             <Top>6.21452cm</Top>
             <Left>1.70801cm</Left>
             <Height>1.2cm</Height>
-            <Width>23.18845cm</Width>
+            <Width>23.18844cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -825,7 +825,7 @@
             </ChartLegends>
             <ChartTitles>
               <ChartTitle Name="Default">
-                <Caption>Título del gráfico</Caption>
+                <Caption>Producto más vendido</Caption>
                 <Style>
                   <BackgroundGradientType>None</BackgroundGradientType>
                   <FontSize>9pt</FontSize>
@@ -837,7 +837,7 @@
                 <Position>TopLeft</Position>
               </ChartTitle>
             </ChartTitles>
-            <Palette>Pacific</Palette>
+            <Palette>BrightPastel</Palette>
             <ChartBorderSkin>
               <Style>
                 <BackgroundColor>Gray</BackgroundColor>
@@ -895,8 +895,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>inicio</rd:DefaultName>
-              <Top>0.94932cm</Top>
-              <Left>14.91049cm</Left>
+              <Top>0.98722cm</Top>
+              <Left>11.53963cm</Left>
               <Height>0.6cm</Height>
               <Width>3.84528cm</Width>
               <Style>
@@ -925,7 +925,7 @@
               </Paragraphs>
               <rd:DefaultName>fin</rd:DefaultName>
               <Top>0.94932cm</Top>
-              <Left>21.05118cm</Left>
+              <Left>17.36282cm</Left>
               <Height>0.6cm</Height>
               <Width>3.84528cm</Width>
               <ZIndex>1</ZIndex>
@@ -954,8 +954,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.94932cm</Top>
-              <Left>13.48647cm</Left>
+              <Top>0.98722cm</Top>
+              <Left>10.11561cm</Left>
               <Height>0.6cm</Height>
               <Width>1.28291cm</Width>
               <ZIndex>2</ZIndex>
@@ -985,7 +985,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox5</rd:DefaultName>
               <Top>0.94932cm</Top>
-              <Left>19.66243cm</Left>
+              <Left>15.97407cm</Left>
               <Height>0.6cm</Height>
               <Width>1.28291cm</Width>
               <ZIndex>3</ZIndex>
@@ -1012,7 +1012,7 @@
                         <FontSize>20pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <TextDecoration>Underline</TextDecoration>
-                        <Color>DarkBlue</Color>
+                        <Color>Blue</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1023,7 +1023,7 @@
               <Top>0.65828cm</Top>
               <Left>0.52599cm</Left>
               <Height>0.89104cm</Height>
-              <Width>7.73875cm</Width>
+              <Width>7.82341cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -1042,7 +1042,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Total:</Value>
+                      <Value>Total: $</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1050,8 +1050,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.76361cm</Top>
-              <Left>0.52599cm</Left>
+              <Top>0.98722cm</Top>
+              <Left>22.03587cm</Left>
               <Height>0.6cm</Height>
               <Width>1.28291cm</Width>
               <ZIndex>5</ZIndex>
@@ -1083,8 +1083,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>total</rd:DefaultName>
-              <Top>1.72571cm</Top>
-              <Left>1.84418cm</Left>
+              <Top>0.98722cm</Top>
+              <Left>23.35406cm</Left>
               <Height>0.6cm</Height>
               <Width>2.5cm</Width>
               <ZIndex>6</ZIndex>
@@ -1097,6 +1097,36 @@
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
                 <rd:FormatSymbolCulture>es-SV</rd:FormatSymbolCulture>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox7">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!usuario.Value</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox5</rd:DefaultName>
+              <Top>1.72571cm</Top>
+              <Left>0.52599cm</Left>
+              <Height>0.6cm</Height>
+              <Width>7.82341cm</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
           </ReportItems>
@@ -1136,6 +1166,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="usuario">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1156,6 +1192,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>total</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>usuario</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

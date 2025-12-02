@@ -12,6 +12,9 @@ namespace Proyecto_MVC.Controllers
         private readonly AppDbContext db = new AppDbContext();
         public ActionResult Index(string buscar)
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Account");
+
             var lista = (from f in db.Facturas
                          join c in db.Clientes on f.ClienteID equals c.ID_Cliente
                          join d in db.DetalleFactura on f.FacturaID equals d.FacturaID
