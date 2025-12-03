@@ -12,7 +12,7 @@
 </head>
 <body>
     <a href="/Facturas/Reporte" class="btn btn-primary" 
-   style="margin-bottom: 15px; display:inline-block; font-family:Arial; font-size:12px">
+   style="margin-bottom: 15px; display:inline-block; font-family:Arial; font-size:14px">
     ← Volver a Reporte Facturas
 </a>
     <form id="form1" runat="server">
